@@ -435,6 +435,19 @@ body.is-case .case{display:block}
 .princ li:hover .pa-c .pd{animation:adapt 4.2s cubic-bezier(.65,0,.25,1) .3s infinite}
 @keyframes adapt{0%,22%{left:var(--lx);top:var(--ly)}33%,55%{left:var(--cx);top:var(--cy)}66%,88%{left:var(--gx);top:var(--gy)}100%{left:var(--lx);top:var(--ly)}}
 @media(prefers-reduced-motion:reduce){.pa *{transition:none!important;animation:none!important}}
+
+
+.cvd{display:block;margin-top:0;border-top:1px solid var(--rule)}
+.cvd+.cvd{border-top:1px solid var(--rule)}
+#about .about+.cvd{margin-top:56px}
+.cvd>summary{list-style:none;display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:center;padding:18px 0;cursor:pointer}
+.cvd>summary::-webkit-details-marker{display:none}
+.cvd>summary h3{grid-column:1/4;transition:color .2s}
+.cvd>summary .chev{grid-column:12;justify-self:end;margin-right:5px}
+.cvd>summary:hover h3,.cvd>summary:hover .chev{color:var(--pine)}
+.cvd[open]>summary .chev{transform:rotate(225deg)}
+.cvd>ol{display:block;margin-left:calc((100% - 11*24px)/12*3 + 3*24px);margin-bottom:24px}
+@media(max-width:760px){.cvd>summary{grid-template-columns:1fr auto}.cvd>summary h3{grid-column:1}.cvd>summary .chev{grid-column:2}.cvd>ol{margin-left:0}}
 </style>
 </head>
 <body>
@@ -509,24 +522,24 @@ body.is-case .case{display:block}
         </div>
       </div>
 
-      <div class="cv">
-        <h3 class="mono">Experience</h3>
+      <details class="cv cvd">
+        <summary><h3 class="mono">Experience</h3><span class="chev" aria-hidden="true"></span></summary>
         <ol>
           <li><span class="when">Jun 2026 → now</span><div><b>Design Consultant</b> · Business Integration Partners S.p.A.<small>Supporting project leads on research, service design and UX, and leading selected projects from discovery to implementation. Clients in energy, banking and telecom.</small></div></li>
           <li><span class="when">Jan 2025 → Jun 2026</span><div><b>Junior Design Consultant</b> · Business Integration Partners S.p.A.<small>User research, service mapping and co-design workshops for utilities and telecom.</small></div></li>
           <li><span class="when">Sep → Dec 2024</span><div><b>Design Intern</b> · Business Integration Partners S.p.A.</div></li>
           <li><span class="when">Jun → Sep 2022</span><div><b>Interior Design Intern</b> · IKEA Milan</div></li>
         </ol>
-      </div>
-      <div class="cv">
-        <h3 class="mono">Education</h3>
+      </details>
+      <details class="cv cvd">
+        <summary><h3 class="mono">Education</h3><span class="chev" aria-hidden="true"></span></summary>
         <ol>
           <li><span class="when">2022 → 2025</span><div><b>MSc Product-Service System Design</b> · Politecnico di Milano</div></li>
           <li><span class="when">Feb → Jun 2024</span><div><b>Exchange</b> · Yonsei University, South Korea</div></li>
           <li><span class="when">Jan → Jun 2022</span><div><b>Erasmus</b> · Østfold University College, Norway<small>Honourable mention for a human-robot interaction study.</small></div></li>
           <li><span class="when">2019 → 2022</span><div><b>BSc Industrial Product Design</b> · Politecnico di Milano</div></li>
         </ol>
-      </div>
+      </details>
     </section>
 
     <section id="experiences">
