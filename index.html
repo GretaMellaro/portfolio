@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F1F1EC">
+<title>Greta Mellaro · Service Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1F1EC;
+  --paper-2:#E6E7E0;
+  --ink:#121614;
+  --ink-2:#4A524D;
+  --ink-3:#7E857F;
+  --rule:rgba(18,22,20,.16);
+  --pine:#1D4F3E;
+  --pine-soft:#D5E1D9;
+  --sans:"Instrument Sans",system-ui,sans-serif;
+  --serif:"Instrument Serif",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --pad:clamp(20px,4vw,56px);
+  --max:1320px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,p,ul,ol,dl,dd{margin:0}
+ul,ol{padding:0;list-style:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--pine);outline-offset:3px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3)}
+.serif{font-family:var(--serif);font-weight:400}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
+.brand{font-weight:600;text-decoration:none;letter-spacing:-.01em;display:flex;gap:10px;align-items:center}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--pine);display:inline-block}
+.nav{display:flex;gap:28px}
+.nav a{text-decoration:none;font-size:14px;color:var(--ink-2)}
+.nav a:hover,.nav a[aria-current="true"]{color:var(--ink)}
+.brand,.nav a{white-space:nowrap}
+@media(max-width:640px){.nav{gap:14px}.nav a{font-size:13px}.nav a.hide-s{display:none}}
+@media(max-width:400px){.brand .dot{display:none}.nav{gap:12px}}
+
+/* hero */
+.hero{padding:clamp(56px,10vw,128px) 0 clamp(40px,6vw,72px)}
+.hero-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end}
+.hero h1{grid-column:1/-1;max-width:19ch;font-size:clamp(34px,5vw,74px);line-height:.98;letter-spacing:-.035em;font-weight:500}
+.hero h1 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--pine);letter-spacing:-.01em}
+.hero .lede{grid-column:1/8;font-size:clamp(18px,1.6vw,21px);line-height:1.5;color:var(--ink-2);margin-top:28px;max-width:40ch}
+.hero .status{grid-column:9/-1;justify-self:end;display:inline-grid;gap:6px;width:max-content}
+.hero .status .pill{justify-self:start}
+.hero .status .langs{width:0;min-width:100%;font-size:10.4px;letter-spacing:0;white-space:nowrap;text-align:justify;text-align-last:justify;overflow:hidden}
+.status .pill{display:inline-flex;gap:7px;align-items:center;font-size:14.5px;border:1px solid var(--rule);border-radius:99px;padding:5px 14px;background:#fff8}
+.status .pill i{width:6px;height:6px;border-radius:50%;background:#2f9e6b;box-shadow:0 0 0 3px #2f9e6b22}
+.status .pill{transition:border-color .3s,background .3s}
+.status .pill:hover{border-color:#2f9e6b66;background:#fff}
+.status .pill:hover i{animation:ping 1.1s cubic-bezier(.2,.7,.2,1) infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 #2f9e6b88;transform:scale(1)}40%{transform:scale(1.35)}100%{box-shadow:0 0 0 12px #2f9e6b00;transform:scale(1)}}
+@media(max-width:860px){.hero .lede,.hero .status{grid-column:1/-1}.hero .status{justify-self:start}}
+
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
+.facts div{padding:18px 16px 20px 0}
+.facts b{display:block;font-size:clamp(26px,3vw,38px);font-weight:500;letter-spacing:-.02em;line-height:1.1}
+.facts span{font-size:14px;color:var(--ink-2)}
+@media(max-width:760px){.facts{grid-template-columns:repeat(2,1fr)}.facts div:nth-child(-n+2){border-bottom:1px solid var(--rule)}}
+
+/* section heads */
+section{scroll-margin-top:64px}
+.shead{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;padding:clamp(64px,8vw,112px) 0 28px;align-items:baseline}
+.shead .mono{grid-column:1/4}
+.shead h2{grid-column:4/-1;font-size:clamp(28px,3.4vw,44px);font-weight:500;letter-spacing:-.02em;line-height:1.1;max-width:22ch}
+.shead .thread{grid-column:4/11;color:var(--ink-2);font-size:16px;margin-top:6px;max-width:58ch}
+.shead h2 em{font-family:var(--serif);font-style:italic;font-weight:400}
+@media(max-width:760px){.shead{grid-template-columns:1fr;gap:10px}.shead .mono,.shead h2,.shead .thread{grid-column:1}}
+
+/* work index */
+.work{border-top:1px solid var(--ink)}
+.row{display:grid;grid-template-columns:56px 220px 1fr 220px 32px;gap:24px;align-items:center;padding:22px 0;border-bottom:1px solid var(--rule);text-decoration:none;transition:background .2s}
+.row:hover{background:var(--paper-2)}
+.row .n{font-family:var(--mono);font-size:13px;color:var(--ink-3);padding-left:4px}
+.row .thumb{aspect-ratio:8/5;overflow:hidden;background:var(--paper-2)}
+.row .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.row:hover .thumb img{transform:scale(1.04)}
+.row h3{font-size:clamp(21px,2vw,28px);font-weight:500;letter-spacing:-.015em;line-height:1.15}
+.row p{color:var(--ink-2);font-size:15.5px;margin-top:6px;max-width:52ch}
+.row .tags{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--rule);border-radius:3px;padding:3px 7px;color:var(--ink-2);white-space:nowrap}
+.tag.k{background:var(--pine);color:#fff;border-color:var(--pine)}
+.tag.a{background:transparent}
+.tag.g{background:var(--pine-soft);color:var(--pine);border-color:#1D4F3E55;font-weight:500}
+.row .go{font-size:22px;color:var(--ink-3);transition:transform .2s,color .2s}
+.row:hover .go{transform:translateX(4px);color:var(--pine)}
+@media(max-width:980px){.row{grid-template-columns:40px 160px 1fr 28px}.row .tags{grid-column:3;flex-direction:row;flex-wrap:wrap;margin-top:-8px}}
+@media(max-width:620px){.row{grid-template-columns:1fr;gap:12px;padding:24px 0}.row .n{padding:0}.row .tags{grid-column:1;margin:0}.row .go{display:none}}
+
+/* principles */
+.princ{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--ink)}
+.princ li{padding:24px 28px 28px 0;border-right:1px solid var(--rule)}
+.princ li+li{padding-left:28px}
+.princ li:last-child{border-right:0}
+.princ .mono{display:block;margin-bottom:28px}
+.princ h3{font-size:22px;font-weight:500;letter-spacing:-.01em;margin-bottom:10px}
+.princ p{color:var(--ink-2);font-size:16px}
+@media(max-width:860px){.princ{grid-template-columns:1fr}.princ li,.princ li+li{padding:24px 0;border-right:0;border-bottom:1px solid var(--rule)}}
+
+/* about */
+.about{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;border-top:1px solid var(--ink);padding-top:32px}
+.about .ph{grid-column:1/4}
+.about .ph img{aspect-ratio:1;object-fit:cover;object-position:50% 30%;width:100%}
+.about .ph .mono{margin-top:10px}
+.about .txt{grid-column:4/-1;max-width:68ch;display:flex;flex-direction:column;gap:14px;font-size:16px}
+.about .txt p:first-child{font-size:clamp(18px,1.6vw,21px);line-height:1.4;letter-spacing:-.01em}
+.about .txt p{color:var(--ink-2)}
+.about .txt p:first-child{color:var(--ink)}
+@media(max-width:600px){.about .ph{grid-column:1/9}}
+@media(max-width:860px){.about .ph{grid-column:1/6}.about .txt{grid-column:1/-1}}
+
+/* CV table */
+.cv{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:56px}
+
+.cv h3{grid-column:1/4}
+.cv ol{grid-column:4/-1;border-top:1px solid var(--rule)}
+.cv li{display:grid;grid-template-columns:180px 1fr;gap:24px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.cv li b{font-weight:500}
+.cv li small{display:block;color:var(--ink-2);font-size:15px;margin-top:2px}
+.cv .when{font-family:var(--mono);font-size:13px;color:var(--ink-3);padding-top:3px}
+@media(max-width:760px){.cv h3,.cv ol{grid-column:1/-1}.cv li{grid-template-columns:1fr;gap:4px}}
+
+/* beyond */
+.beyond{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.beyond figure{margin:0}
+.beyond img{aspect-ratio:1;object-fit:cover;width:100%}
+.beyond figcaption{font-size:13px;color:var(--ink-2);margin-top:8px;line-height:1.35}
+.beyond figcaption b{font-weight:500;color:var(--ink);display:block}
+@media(max-width:860px){.beyond{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.beyond{grid-template-columns:repeat(2,1fr)}}
+
+/* contact */
+.contact{background:var(--pine);color:#EAF1EC;margin-top:clamp(64px,8vw,112px)}
+.contact .wrap{padding-top:clamp(40px,5vw,64px);padding-bottom:24px}
+.contact h2{font-size:clamp(26px,3.2vw,44px);font-weight:500;letter-spacing:-.035em;line-height:1;max-width:16ch}
+.contact h2 em{font-family:var(--serif);font-style:italic;font-weight:400}
+.contact .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:10px;border:1px solid #EAF1EC55;border-radius:99px;padding:10px 18px;font-size:15px;text-decoration:none;transition:background .2s,color .2s}
+.btn:hover{background:#EAF1EC;color:var(--pine)}
+.btn.solid{background:#EAF1EC;color:var(--pine)}
+.btn.solid:hover{background:#fff}
+.contact .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:44px;padding-top:16px;border-top:1px solid #EAF1EC33;font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#EAF1EC99}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;background:var(--ink);color:#fff;padding:10px 16px;border-radius:6px;font-size:14px;transition:.25s;pointer-events:none;z-index:50}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ===== case study ===== */
+.case{display:none}
+body.is-case .home{display:none}
+body.is-case .case{display:block}
+.c-top{padding:clamp(40px,6vw,80px) 0 32px}
+.back{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;display:inline-flex;gap:8px}
+.back:hover{color:var(--pine)}
+.c-top .kick{margin-top:40px;display:flex;gap:8px;flex-wrap:wrap}
+.c-top h1{font-size:clamp(36px,5.6vw,80px);font-weight:500;letter-spacing:-.035em;line-height:1;margin-top:20px;max-width:18ch}
+.c-top .sub{font-family:var(--serif);font-style:italic;font-size:clamp(22px,2.4vw,32px);color:var(--ink-2);margin-top:14px;max-width:34ch;line-height:1.2}
+.c-hero{margin-top:8px;background:var(--paper-2)}
+.c-hero img{width:100%;max-height:78vh;object-fit:cover}
+.c-hero.ill img{max-height:none;height:auto;aspect-ratio:8/5;object-fit:cover}
+.tldr{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--rule);margin-top:40px}
+.tldr div{padding:16px 20px 20px 0}
+.tldr div+div{padding-left:20px;border-left:1px solid var(--rule)}
+.tldr dt{margin-bottom:8px}
+.tldr dd{font-size:15.5px;line-height:1.45}
+@media(max-width:860px){.tldr{grid-template-columns:1fr 1fr}.tldr div:nth-child(3){border-left:0;padding-left:0}.tldr div:nth-child(-n+2){border-bottom:1px solid var(--rule)}}
+.numbers{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;margin-top:0;border-bottom:1px solid var(--rule)}
+.numbers div{padding:22px 16px 22px 0}
+.numbers b{display:block;font-size:clamp(34px,4vw,52px);font-weight:500;letter-spacing:-.03em;line-height:1;color:var(--pine)}
+.numbers span{font-size:14px;color:var(--ink-2)}
+.block{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;padding:clamp(48px,6vw,80px) 0 0}
+.block>.mono{grid-column:1/4;padding-top:6px}
+.block>.body{grid-column:4/11}
+.block .body>p{font-size:19px;line-height:1.55;color:var(--ink)}
+.block .body>p+p{margin-top:14px}
+.block .lead{font-size:clamp(22px,2.2vw,28px)!important;letter-spacing:-.01em;line-height:1.35!important}
+@media(max-width:860px){.block>.mono,.block>.body{grid-column:1/-1}}
+.steps{border-top:1px solid var(--rule)}
+.steps li{display:grid;grid-template-columns:48px 1fr;gap:16px;padding:18px 0;border-bottom:1px solid var(--rule)}
+.steps .k{font-family:var(--mono);font-size:13px;color:var(--pine);padding-top:4px}
+.steps b{font-weight:500;font-size:18px;display:block;margin-bottom:4px}
+.steps p{color:var(--ink-2);font-size:16px}
+.outcome{background:var(--pine-soft);padding:28px 32px;border-left:3px solid var(--pine)}
+.outcome p{font-size:19px;line-height:1.5}
+.outcome ul{margin-top:14px;display:grid;gap:8px}
+.outcome li{padding-left:22px;position:relative;font-size:16px;color:var(--ink-2)}
+.outcome li::before{content:"→";position:absolute;left:0;color:var(--pine)}
+.gallery{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:clamp(48px,6vw,80px)}
+.gallery figure{margin:0;grid-column:span 6;background:var(--paper-2)}
+.gallery figure.w{grid-column:1/-1}
+.gallery img{width:100%;height:100%;object-fit:cover;cursor:zoom-in}
+.gallery figcaption{font-size:13px;color:var(--ink-3);padding:8px 0 0;background:var(--paper)}
+@media(max-width:700px){.gallery figure{grid-column:1/-1}}
+.method{background:var(--ink);color:#E9ECE7;padding:clamp(28px,4vw,56px);display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.method div{padding:0 20px 0 0;border-right:1px dashed #ffffff30}
+.method div+div{padding-left:20px}
+.method div:last-child{border:0}
+.method .mono{color:#9FB3A8}
+.method b{display:block;white-space:nowrap;font-size:clamp(26px,3vw,42px);font-weight:500;letter-spacing:-.03em;margin:18px 0 6px}
+.method p{font-size:14.5px;color:#C8D0CA;line-height:1.45}
+.method .conf{position:absolute;right:16px;top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#9FB3A8}
+@media(max-width:760px){.method{grid-template-columns:1fr 1fr;row-gap:28px}.method div:nth-child(2){border:0}.method div:nth-child(3){padding-left:0}}
+.note{font-size:14px;color:var(--ink-3);margin-top:12px;font-style:italic}
+.next{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-top:clamp(40px,5vw,64px);padding:20px 0 4px;border-top:1px solid var(--ink);text-decoration:none}
+.next h3{font-size:clamp(20px,2.2vw,30px);margin-top:4px;font-weight:500;letter-spacing:-.03em;line-height:1}
+.next:hover h3{color:var(--pine)}
+.next .arrow{font-size:clamp(20px,2.2vw,30px);line-height:1}
+
+
+/* ===== case study, 3 columns ===== */
+.cs-top{display:flex;justify-content:space-between;padding:10px var(--pad) 0;max-width:1640px;margin:0 auto}
+.cs-arrow{font-size:20px;text-decoration:none;color:var(--ink-2);line-height:1;padding:4px}
+.cs-arrow:hover{color:var(--pine)}
+.cs{display:grid;grid-template-columns:minmax(210px,2.6fr) minmax(320px,4.8fr) 5.4fr;gap:clamp(28px,3.5vw,56px);padding:8px var(--pad) 0;max-width:1640px;margin:0 auto;align-items:start}
+@media(min-width:1101px) and (min-height:600px){
+ .cs{height:calc(100vh - 106px);height:calc(100dvh - 106px);align-items:stretch}
+ .cs-meta,.cs-text{overflow-y:auto;overflow-x:hidden}
+ .cs-media{overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
+ .cs-meta,.cs-text{scrollbar-width:none}
+ .cs-meta::-webkit-scrollbar,.cs-text::-webkit-scrollbar{display:none}
+ .cs-media{padding-right:6px;padding-bottom:48px}
+ .cs-text{padding-bottom:32px}
+}
+.cs-meta .kick{display:flex;flex-wrap:wrap;gap:6px}
+.cs-meta h1{font-size:clamp(28px,2.6vw,40px);font-weight:500;letter-spacing:-.025em;line-height:1.05;margin-top:18px}
+.cs-meta .sub{font-family:var(--serif);font-style:italic;font-size:clamp(19px,1.5vw,22px);line-height:1.3;color:var(--ink-2);margin-top:14px}
+.cs-meta dl{margin-top:28px;display:grid;gap:18px}
+.cs-meta dt{margin-bottom:6px}
+.cs-meta dd{font-size:15px;font-weight:500;line-height:1.45}
+.cs-meta dd.obj{font-weight:400;color:var(--ink-2)}
+.cs-text{padding-top:4px}
+.cs-num{margin-top:24px;border-top:1px solid var(--ink)}
+.cs-num li{display:flex;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule)}
+.cs-num b{font-size:22px;font-weight:500;letter-spacing:-.02em;color:var(--pine);min-width:64px}
+.cs-num span{font-size:13px;color:var(--ink-2);line-height:1.3}
+.cs-numrow{display:none}
+@media(min-width:1101px){
+ .cs-meta .cs-num{display:none}
+ .cs-numrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--rule);margin-bottom:16px}
+ .cs-numrow div{padding:8px 12px 10px 0}
+ .cs-numrow b{display:block;font-size:clamp(22px,1.9vw,28px);font-weight:500;letter-spacing:-.03em;line-height:1;color:var(--pine)}
+ .cs-numrow span{display:block;font-size:12.5px;color:var(--ink-2);line-height:1.3;margin-top:4px}
+}
+.cs-text .lab{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--pine);margin:18px 0 6px}
+.cs-text .lab:first-child{margin-top:0}
+.cs-text>p{font-size:15px;line-height:1.55}
+.cs-text>p+p{margin-top:12px}
+.cs-text .outcome{margin-top:16px;padding:12px 16px}
+.cs-text .outcome .mono{color:var(--pine);display:block;margin-bottom:6px}
+.cs-text .outcome p{font-size:15px}
+.proc{margin-top:18px;border-top:1px solid var(--ink)}
+.proc summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:14px 0;cursor:pointer;font-family:var(--mono);font-size:12.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+.proc summary::-webkit-details-marker{display:none}
+.proc summary:hover{color:var(--pine)}
+.chev{margin-right:5px;flex:none;width:9px;height:9px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-3px);transition:transform .25s}
+.proc[open] .chev{transform:rotate(225deg)}
+.proc ol{border-top:1px solid var(--rule)}
+.proc ol>li{display:grid;grid-template-columns:40px 1fr;gap:12px;padding:20px 0;border-bottom:1px solid var(--rule)}
+.proc .k{font-family:var(--mono);font-size:13px;color:var(--pine);padding-top:3px}
+.proc h3{font-size:16.5px;font-weight:500;letter-spacing:-.01em;margin-bottom:6px}
+.proc p{font-size:14.5px;color:var(--ink-2)}
+.proc .mono{display:block;margin:14px 0 8px}
+.hl{display:grid;gap:6px}
+.hl li{position:relative;padding-left:20px;font-size:14px;line-height:1.45}
+.hl>li::before{content:"→";position:absolute;left:0;color:var(--pine)}
+.hl ul{margin-top:6px;display:grid;gap:4px}
+.hl ul li{padding-left:16px;color:var(--ink-2);font-size:13.5px}
+.hl ul li::before{content:"·";position:absolute;left:4px}
+.cs-media{display:flex;flex-direction:column;gap:28px}
+.cs-media figure{margin:0}
+.cs-media img,.cs-media video{width:100%;display:block;background:var(--paper-2)}
+.cs-media img.zoom{cursor:zoom-in}
+.cs-media figcaption{font-size:13px;color:var(--ink-3);margin-top:8px}
+.cs-media .method{grid-template-columns:repeat(2,1fr);row-gap:28px}
+.cs-media .method div:nth-child(3){border-right:0}
+.cs-media .method div:nth-child(4){padding-left:0}
+.cs-media .note{margin-top:-8px}
+.cs-media .method div{border-right:0!important;padding:0 16px 0 0!important}
+.cs-media .method div:nth-child(odd){padding-left:0!important}
+.cs-media .method.odd div:last-child{grid-column:1/-1}
+.cs-media .method b{white-space:normal}
+@media(max-width:1100px){.cs{grid-template-columns:minmax(220px,1fr) 1.6fr}.cs-media{grid-column:1/-1;margin-top:24px}}
+@media(max-width:720px){.cs{grid-template-columns:1fr}.cs-meta{position:static}.cs-media{grid-column:1}.cs-num{grid-template-columns:repeat(3,1fr)}}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(10,14,12,.94);display:none;align-items:center;justify-content:center;z-index:60;padding:4vw}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%;object-fit:contain}
+.lb button{position:absolute;top:16px;right:20px;color:#fff;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+
+
+/* cover animations */
+.row .thumb svg{width:100%;height:100%;display:block}
+.cov *{transform-box:fill-box;transform-origin:center}
+:is(.row:hover,.touch .row.in) .c-en .e{animation:cv-wave 1.4s ease-in-out infinite;animation-delay:calc(var(--i) * 40ms)}
+.c-en .ws{transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+:is(.row:hover,.touch .row.in) .c-en .ws{transform:rotate(240deg) scale(1.25)}
+.c-en .arw{transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+:is(.row:hover,.touch .row.in) .c-en .arw{animation:cv-nudge 1s ease-in-out infinite}
+:is(.row:hover,.touch .row.in) .c-en .blk{animation:cv-pop 2.4s cubic-bezier(.2,.7,.2,1) infinite;animation-delay:calc(var(--i) * 160ms)}
+:is(.row:hover,.touch .row.in) .c-me .jp{animation:cv-march .7s linear infinite}
+:is(.row:hover,.touch .row.in) .c-me .st{animation:cv-pulse2 1.4s ease-in-out infinite;animation-delay:calc(var(--i) * 110ms)}
+:is(.row:hover,.touch .row.in) .c-me .mk{animation:cv-blink 1.6s ease-in-out infinite;animation-delay:calc(var(--i) * 80ms)}
+.c-me .train{transform-box:view-box;offset-path:path('M40 330 L210 330 L290 250 L520 250 L600 170 L760 170');offset-distance:0%;offset-rotate:0deg;opacity:0}
+:is(.row:hover,.touch .row.in) .c-me .train{animation:cv-train 2.6s linear infinite}
+.c-no .p{transition:transform .8s cubic-bezier(.3,1.5,.5,1);transition-delay:calc(var(--i) * 45ms)}
+:is(.row:hover,.touch .row.in) .c-no .p{transform:translate(calc(var(--dx) * 2),calc(var(--dy) * 2))}
+:is(.row:hover,.touch .row.in) .c-no .p circle{animation:cv-bob 1.4s ease-in-out infinite;animation-delay:calc(.8s + var(--i) * 90ms)}
+.c-no .leaf{transition:transform 1s cubic-bezier(.3,1.5,.5,1)}
+:is(.row:hover,.touch .row.in) .c-no .leaf{transform:rotate(-28deg) scale(1.25)}
+:is(.row:hover,.touch .row.in) .c-no .tr{animation:cv-spin 6s linear infinite}
+.c-rep .tr{transition:transform .5s}
+:is(.row:hover,.touch .row.in) .c-rep .tr{animation:cv-trail 1.3s ease-in-out infinite;animation-delay:calc(var(--i) * 55ms)}
+.c-rep .old{transition:opacity .6s,transform .8s}
+:is(.row:hover,.touch .row.in) .c-rep .old{opacity:.15;transform:scale(.5)}
+.c-rep .cp{transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .9s}
+:is(.row:hover,.touch .row.in) .c-rep .cp{transform:scale(.45);opacity:.5}
+:is(.row:hover,.touch .row.in) .c-rep .ring2{animation:cv-spin 3s linear infinite}
+:is(.row:hover,.touch .row.in) .c-rep .ring{animation:cv-pulse 1.1s ease-in-out infinite}
+@keyframes cv-trail{0%,100%{transform:none}30%{transform:scale(2.3)}}
+:is(.row:hover,.touch .row.in) .c-en .bm{animation:cv-bm 1.6s ease-in-out infinite;animation-delay:calc(var(--i) * 120ms)}
+:is(.row:hover,.touch .row.in) .c-en .pp{animation:cv-bob2 1.2s ease-in-out infinite;animation-delay:calc(var(--i) * 60ms)}
+:is(.row:hover,.touch .row.in) .c-en .nd{animation:cv-pulse2 1.4s ease-in-out infinite;animation-delay:calc(var(--i) * 150ms)}
+@keyframes cv-bm{40%{transform:translateY(-6px) rotate(8deg)}}
+@keyframes cv-bob2{50%{transform:translateY(-5px)}}
+@keyframes cv-spin{to{transform:rotate(360deg)}}
+@keyframes cv-pulse{50%{transform:scale(1.8);opacity:.3}}
+@keyframes cv-wave{50%{fill:#D9A441;fill-opacity:1;transform:scale(1.9)}}
+@keyframes cv-pop{0%{transform:translateX(40px);opacity:0}25%,80%{transform:none;opacity:1}100%{transform:none;opacity:0}}
+@keyframes cv-nudge{50%{transform:translateX(22px)}}
+@keyframes cv-march{to{stroke-dashoffset:-32}}
+@keyframes cv-pulse2{30%{transform:scale(1.8)}}
+@keyframes cv-train{0%{offset-distance:0%;opacity:0}8%{opacity:1}92%{opacity:1}100%{offset-distance:100%;opacity:0}}
+@keyframes cv-bob{50%{transform:scale(1.25)}}
+@keyframes cv-blink{40%{stroke:#D9A441;stroke-width:2.5;transform:rotate(90deg) scale(1.4)}}
+@media(prefers-reduced-motion:reduce){.cov *{animation:none!important;transition:none!important}}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+.hero{position:relative}
+.hd{position:absolute;width:14px;height:14px;border-radius:50%;z-index:0;pointer-events:none;
+  left:var(--x);top:var(--y);background:var(--c);
+  transition:left 1.3s cubic-bezier(.65,0,.25,1),top 1.3s cubic-bezier(.65,0,.25,1),background-color .9s ease .7s,transform .4s;
+  transition-delay:var(--d),var(--d),calc(var(--d) + .6s),0s;
+  animation:hd-float 3.2s ease-in-out infinite;animation-delay:var(--fd)}
+.hero.lined .hd{left:var(--lx);top:var(--ly);background:var(--pine);animation:none}
+.hero-grid{position:relative;z-index:1}
+@keyframes hd-float{50%{transform:translateY(-6px)}}
+@media(prefers-reduced-motion:reduce){.hd{transition:none;animation:none}}
+@media(max-width:860px){.hd{display:none}}
+
+.hero h1 .rot{display:inline-block;position:relative;vertical-align:bottom;white-space:nowrap;overflow:hidden;padding:0 .08em .16em 0;margin:0 -.08em -.16em 0;transition:width .6s cubic-bezier(.65,0,.25,1);cursor:pointer}
+.hero h1 .rot:focus-visible{outline-offset:6px}
+.hero h1 .rot span{display:inline-block;transition:transform .6s cubic-bezier(.65,0,.25,1),opacity .5s}
+.hero h1 .rot span.out{position:absolute;left:0;top:0;transform:translateY(-105%);opacity:0}
+.hero h1 .rot span.in{transform:translateY(105%);opacity:0}
+.hero h1 .rot-meas{position:absolute;visibility:hidden;white-space:nowrap;left:-9999px;top:0}
+@media(max-width:860px){.hero h1 br.dk{display:none}}
+.hero h1 .rot-dot{display:inline-block;width:.16em;height:.16em;border-radius:50%;background:var(--pine);vertical-align:top;position:relative;top:.12em;margin-left:.04em;animation:rot-blink 1.4s ease-in-out infinite}
+@keyframes rot-blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.15;transform:scale(.7)}}
+@media(prefers-reduced-motion:reduce){.hero h1 .rot-dot{animation:none}}
+
+.facts .fact{position:relative;cursor:default;isolation:isolate;outline:none}
+.facts .fact::before{content:"";position:absolute;inset:0 0 0 -12px;background:var(--pine-soft);transform:scaleY(0);transform-origin:bottom;transition:transform .45s cubic-bezier(.2,.7,.2,1);z-index:-1}
+.facts .fact b,.facts .fact span{position:relative;transition:color .3s,transform .45s cubic-bezier(.2,.7,.2,1)}
+.facts .fact b em{font-style:normal;font-variant-numeric:tabular-nums}
+.facts .fact:is(:hover,:focus-visible,.on)::before{transform:scaleY(1)}
+.facts .fact:is(:hover,:focus-visible,.on) b{color:var(--pine);transform:translateY(-3px)}
+.facts .fact:is(:hover,:focus-visible,.on) span{color:var(--ink)}
+.fd{position:absolute;right:14px;top:20px;display:grid;grid-template-columns:repeat(7,7px);gap:5px;pointer-events:none}
+.fd i{width:7px;height:7px;border-radius:50%;background:var(--pine);opacity:0;transform:scale(0);transition:opacity .25s,transform .35s cubic-bezier(.3,1.6,.5,1);transition-delay:0s}
+.fd i.y{background:#D9A441}
+.fd i.o{background:transparent;box-shadow:inset 0 0 0 1.3px var(--pine)}
+.facts .fact:is(:hover,:focus-visible,.on) .fd i{opacity:1;transform:scale(1);transition-delay:calc(var(--k) * 45ms)}
+@media(max-width:760px){.facts .fact::before{left:0}.fd{right:8px;top:14px;grid-template-columns:repeat(5,6px);gap:4px}.fd i{width:6px;height:6px}}
+@media(prefers-reduced-motion:reduce){.facts .fact *,.facts .fact::before{transition:none!important}}
+
+.beyond figure{position:relative}
+#experiences .beyond{margin-top:40px}
+.beyond img{position:relative;transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s;transform-origin:center bottom}
+.beyond figure:first-child img{transform-origin:left bottom}
+.beyond figure:last-child img{transform-origin:right bottom}
+@media(hover:hover){.beyond figure:hover img{transform:scale(1.3);z-index:5;box-shadow:0 18px 40px -12px rgba(18,22,20,.45)}
+.beyond figure:hover figcaption{color:var(--ink)}}
+@media(prefers-reduced-motion:reduce){.beyond img{transition:none}}
+
+/* approach animations */
+.princ li{position:relative;isolation:isolate;transition:background .4s}
+.princ li::after{content:"";position:absolute;inset:0;background:var(--pine-soft);z-index:-1;transform:scaleY(0);transform-origin:bottom;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.princ li:first-child::after{left:-12px}
+.princ li:hover::after{transform:scaleY(1)}
+.princ li h3{transition:color .3s}
+.princ li:hover h3{color:var(--pine)}
+.pa{position:relative;width:132px;height:52px;margin-bottom:22px}
+.pa .mono{position:absolute;left:0;top:0;margin:0;transition:opacity .3s}
+.princ li:hover .pa .mono{opacity:0}
+.pa .pd{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--pine);opacity:0;transform:scale(.4);
+ transition:left .9s cubic-bezier(.65,0,.25,1),top .9s cubic-bezier(.65,0,.25,1),opacity .3s,transform .4s;left:var(--x0);top:var(--y0)}
+.pa .pd.y{background:#D9A441}
+.princ li:hover .pa .pd{opacity:1;transform:none}
+.princ li:hover .pa-a .pd,.princ li:hover .pa-b .pd{left:var(--x1);top:var(--y1);transition-delay:.25s,.25s,0s,0s}
+.pa-b .tbl{position:absolute;left:52px;top:12px;width:28px;height:28px;border-radius:50%;border:1.3px solid var(--ink);opacity:0;transform:scale(.5);transition:opacity .4s .5s,transform .5s .5s}
+.princ li:hover .pa-b .tbl{opacity:1;transform:none}
+.pa-c .pd{left:var(--lx);top:var(--ly)}
+.princ li:hover .pa-c .pd{animation:adapt 4.2s cubic-bezier(.65,0,.25,1) .3s infinite}
+@keyframes adapt{0%,22%{left:var(--lx);top:var(--ly)}33%,55%{left:var(--cx);top:var(--cy)}66%,88%{left:var(--gx);top:var(--gy)}100%{left:var(--lx);top:var(--ly)}}
+@media(prefers-reduced-motion:reduce){.pa *{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot"></span>Greta Mellaro</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#work">Selected work</a>
+      <a href="#approach" class="hide-s">Approach</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ============ HOME ============ -->
+<div class="home" id="top">
+  <div class="wrap">
+    <section class="hero"><span class="hd" style="--c:#1D4F3E;--x:64%;--y:14%;--lx:92%;--ly:26%;--d:0.00s;--fd:-0.0s"></span><span class="hd" style="--c:#D9A441;--x:86%;--y:8%;--lx:92%;--ly:32%;--d:0.09s;--fd:-0.5s"></span><span class="hd" style="--c:#D9A441;--x:71%;--y:46%;--lx:92%;--ly:38%;--d:0.18s;--fd:-1.0s"></span><span class="hd" style="--c:#1D4F3E;--x:95%;--y:38%;--lx:92%;--ly:44%;--d:0.27s;--fd:-1.5s"></span><span class="hd" style="--c:#1D4F3E;--x:78%;--y:90%;--lx:92%;--ly:50%;--d:0.36s;--fd:-2.0s"></span><span class="hd" style="--c:#D9A441;--x:58%;--y:70%;--lx:92%;--ly:56%;--d:0.45s;--fd:-2.5s"></span>
+      <div class="hero-grid">
+        <h1 class="reveal">Service designer.<br>I bring organisations and<br class="dk"> the people they serve<br class="dk"> to the same table, through<br><em class="rot" role="button" tabindex="0" title="Click to see more methods"><span>UX research</span></em><span class="rot-dot" aria-hidden="true"></span> and<br>collaborative design.</h1>
+        <p class="lede reveal">Design Consultant in Milan.</p>
+        <div class="status reveal">
+          <span class="pill"><i></i>Open to relocation</span>
+          <span class="mono langs">English C1 · Italian native</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="facts reveal">
+      <div class="fact" tabindex="0"><b><em class="num" data-to="2">2</em>+ yrs</b><span>service design consulting</span><i class="fd" aria-hidden="true"><i class="p" style="--k:0"></i><i class="p" style="--k:1"></i><i class="o" style="--k:2"></i></i></div>
+      <div class="fact" tabindex="0"><b><em class="num" data-to="1300">1,300</em>+</b><span>customers reached in my largest study</span><i class="fd" aria-hidden="true"><i class="p" style="--k:0"></i><i class="p" style="--k:1"></i><i class="p" style="--k:2"></i><i class="p" style="--k:3"></i><i class="p" style="--k:4"></i><i class="p" style="--k:5"></i><i class="p" style="--k:6"></i><i class="p" style="--k:7"></i><i class="o" style="--k:8"></i><i class="o" style="--k:9"></i><i class="o" style="--k:10"></i><i class="o" style="--k:11"></i><i class="o" style="--k:12"></i></i></div>
+      <div class="fact" tabindex="0"><b><em class="num" data-to="21">21</em></b><span>interviews in a project I led</span><i class="fd" aria-hidden="true"><i class="p" style="--k:0"></i><i class="p" style="--k:1"></i><i class="p" style="--k:2"></i><i class="p" style="--k:3"></i><i class="p" style="--k:4"></i><i class="p" style="--k:5"></i><i class="p" style="--k:6"></i><i class="p" style="--k:7"></i><i class="p" style="--k:8"></i><i class="p" style="--k:9"></i><i class="p" style="--k:10"></i><i class="p" style="--k:11"></i><i class="p" style="--k:12"></i><i class="p" style="--k:13"></i><i class="p" style="--k:14"></i><i class="y" style="--k:15"></i><i class="y" style="--k:16"></i><i class="y" style="--k:17"></i><i class="y" style="--k:18"></i><i class="y" style="--k:19"></i><i class="y" style="--k:20"></i></i></div>
+      <div class="fact" tabindex="0"><b><em class="num" data-to="5">5</em>+ clients</b><span>across different industries</span><i class="fd" aria-hidden="true"><i class="p" style="--k:0"></i><i class="y" style="--k:1"></i><i class="p" style="--k:2"></i><i class="y" style="--k:3"></i><i class="p" style="--k:4"></i><i class="o" style="--k:5"></i></i></div>
+    </div>
+
+    <section id="work">
+      <div class="shead">
+        <span class="mono">01 · Selected work</span>
+        <h2>Research that shapes <em>decisions</em>.</h2>
+        <p class="thread">Every project brings at least two sides into the process: the people who commission a service or product, and the people who use it. Stakeholder workshops and end-user research run side by side, so the outcome reflects both.</p>
+      </div>
+      <div class="work" id="workList"></div>
+    </section>
+
+    <section id="approach">
+      <div class="shead">
+        <span class="mono">02 · Approach</span>
+        <h2>Three habits that show up in every project.</h2>
+      </div>
+      <ol class="princ">
+        <li class="reveal"><div class="pa pa-a" aria-hidden="true"><span class="mono">A</span><i class="pd" style="--x0:56px;--y0:25px;--x1:8px;--y1:8px;--k:0px"></i><i class="pd" style="--x0:115px;--y0:20px;--x1:30px;--y1:8px;--k:1px"></i><i class="pd" style="--x0:63px;--y0:26px;--x1:52px;--y1:8px;--k:2px"></i><i class="pd" style="--x0:23px;--y0:23px;--x1:74px;--y1:8px;--k:3px"></i><i class="pd" style="--x0:78px;--y0:35px;--x1:96px;--y1:8px;--k:4px"></i><i class="pd" style="--x0:12px;--y0:13px;--x1:8px;--y1:30px;--k:5px"></i><i class="pd" style="--x0:11px;--y0:36px;--x1:30px;--y1:30px;--k:6px"></i><i class="pd" style="--x0:86px;--y0:2px;--x1:52px;--y1:30px;--k:7px"></i><i class="pd" style="--x0:122px;--y0:42px;--x1:74px;--y1:30px;--k:8px"></i><i class="pd" style="--x0:81px;--y0:27px;--x1:96px;--y1:30px;--k:9px"></i></div><h3>Evidence before opinions</h3><p>When possible, I start with mixed methods: surveys at scale to see the pattern, interviews and in-context observation to understand it. Decisions get easier when the room shares the same facts.</p></li>
+        <li class="reveal"><div class="pa pa-b" aria-hidden="true"><span class="mono">B</span><b class="tbl"></b><i class="pd" style="--x0:0px;--y0:8px;--x1:62px;--y1:44px"></i><i class="pd y" style="--x0:124px;--y0:8px;--x1:43px;--y1:33px"></i><i class="pd" style="--x0:0px;--y0:24px;--x1:43px;--y1:11px"></i><i class="pd y" style="--x0:124px;--y0:24px;--x1:62px;--y1:0px"></i><i class="pd" style="--x0:0px;--y0:40px;--x1:81px;--y1:11px"></i><i class="pd y" style="--x0:124px;--y0:40px;--x1:81px;--y1:33px"></i></div><h3>Design with, not for</h3><p>Co-design workshops bring customers, business and tech teams to the same table. Students co-created the Nostra canteen; stakeholders co-defined the Utility App MVP.</p></li>
+        <li class="reveal"><div class="pa pa-c" aria-hidden="true"><span class="mono">C</span><i class="pd" style="--lx:8px;--ly:22px;--cx:62px;--cy:4px;--gx:36px;--gy:8px"></i><i class="pd" style="--lx:30px;--ly:22px;--cx:78px;--cy:13px;--gx:58px;--gy:8px"></i><i class="pd" style="--lx:52px;--ly:22px;--cx:78px;--cy:31px;--gx:80px;--gy:8px"></i><i class="pd" style="--lx:74px;--ly:22px;--cx:62px;--cy:40px;--gx:36px;--gy:30px"></i><i class="pd" style="--lx:96px;--ly:22px;--cx:46px;--cy:31px;--gx:58px;--gy:30px"></i><i class="pd" style="--lx:118px;--ly:22px;--cx:46px;--cy:13px;--gx:80px;--gy:30px"></i></div><h3>Adapt to the context</h3><p>I've worked across industries, team sizes and types of problem. I pick up new domains quickly and adapt methods to the people, constraints and time available.</p></li>
+      </ol>
+    </section>
+
+    <section id="about">
+      <div class="shead">
+        <span class="mono">03 · About</span>
+        <h2>Curious about cities, systems and the people inside them.</h2>
+      </div>
+      <div class="about">
+        <div class="ph reveal"><img src="images/portrait.webp" alt="Portrait of Greta Mellaro" loading="lazy"></div>
+        <div class="txt reveal">
+          <p>I work where user research, strategy and design meet, guiding projects from discovery to implementation in multidisciplinary teams.</p>
+          <p>At BIP I joined Officina, the company's design centre of excellence, as an intern in 2024 and was promoted to Design Consultant in 2026. Alongside client work, I proposed and led an internal research project on how Officina itself is positioned.</p>
+          <p>Studying at Politecnico di Milano, with exchanges in Norway and South Korea, taught me to design across cultures and languages, and grew my interest in public services, which led to my Master's thesis on Milan's metro.</p>
+          <p>Outside work I photograph cities: their infrastructure, rhythms and the small details that explain the bigger picture.</p>
+        </div>
+      </div>
+
+      <div class="cv">
+        <h3 class="mono">Experience</h3>
+        <ol>
+          <li><span class="when">Jun 2026 → now</span><div><b>Design Consultant</b> · Business Integration Partners S.p.A.<small>Supporting project leads on research, service design and UX, and leading selected projects from discovery to implementation. Clients in energy, banking and telecom.</small></div></li>
+          <li><span class="when">Jan 2025 → Jun 2026</span><div><b>Junior Design Consultant</b> · Business Integration Partners S.p.A.<small>User research, service mapping and co-design workshops for utilities and telecom.</small></div></li>
+          <li><span class="when">Sep → Dec 2024</span><div><b>Design Intern</b> · Business Integration Partners S.p.A.</div></li>
+          <li><span class="when">Jun → Sep 2022</span><div><b>Interior Design Intern</b> · IKEA Milan</div></li>
+        </ol>
+      </div>
+      <div class="cv">
+        <h3 class="mono">Education</h3>
+        <ol>
+          <li><span class="when">2022 → 2025</span><div><b>MSc Product-Service System Design</b> · Politecnico di Milano</div></li>
+          <li><span class="when">Feb → Jun 2024</span><div><b>Exchange</b> · Yonsei University, South Korea</div></li>
+          <li><span class="when">Jan → Jun 2022</span><div><b>Erasmus</b> · Østfold University College, Norway<small>Honourable mention for a human-robot interaction study.</small></div></li>
+          <li><span class="when">2019 → 2022</span><div><b>BSc Industrial Product Design</b> · Politecnico di Milano</div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="experiences">
+      <div class="shead">
+        <span class="mono">04 · Experiences</span>
+        <h2>Workshops, classrooms and experiences <em>that shaped me</em>.</h2>
+      </div>
+      <div class="beyond">
+        <figure class="reveal"><img src="images/explore-04.webp" alt="" loading="lazy"><figcaption><b>Exchange semester</b>Østfold, Norway</figcaption></figure>
+        <figure class="reveal"><img src="images/explore-18.webp" alt="" loading="lazy"><figcaption><b>HCI class</b>Østfold, Norway</figcaption></figure>
+        <figure class="reveal"><img src="images/explore-paris.webp" alt="" loading="lazy"><figcaption><b>Experience design workshop</b>Paris, France</figcaption></figure>
+        <figure class="reveal"><img src="images/explore-korea.webp" alt="" loading="lazy"><figcaption><b>Exchange semester</b>Seoul, South Korea</figcaption></figure>
+        <figure class="reveal"><img src="images/explore-13.webp" alt="" loading="lazy"><figcaption><b>Urban regeneration workshop</b>Gyumri, Armenia</figcaption></figure>
+        <figure class="reveal"><img src="images/explore-17.webp" alt="" loading="lazy"><figcaption><b>Sustainable design workshop</b>Toronto, Canada</figcaption></figure>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ============ CASE ============ -->
+<div class="case" id="case"></div>
+</main>
+
+<footer class="contact" id="contact">
+  <div class="wrap">
+    <p class="mono" style="color:#9FC2B0;margin-bottom:14px">Contact</p>
+    <h2>Have a service that's <em>hard to use?</em> Let's talk.</h2>
+    <div class="links">
+      <button class="btn solid" id="copyMail" type="button">greta.mellaro@outlook.com <span aria-hidden="true">⧉</span></button>
+      <a class="btn" href="https://www.linkedin.com/in/greta-mellaro/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <div class="foot"><span>Greta Mellaro · Service Designer</span><span>Milan, Italy · CET</span><span>© 2026</span></div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Image viewer"><button type="button" id="lbClose">Close ✕</button><img alt=""></div>
+<div class="toast" id="toast">Email copied</div>
+
+<script>
+const COVERS={"design-unit-repositioning": "<svg class='cov c-rep' preserveAspectRatio='xMidYMid slice' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'><rect width='800' height='500' fill='#1D4F3E'/><line x1='400' y1='30' x2='400' y2='470' stroke='#EAF1EC' stroke-opacity='.16'/><line x1='40' y1='250' x2='760' y2='250' stroke='#EAF1EC' stroke-opacity='.16'/><circle class='cp' style='--i:0' cx='130' cy='110' r='13' fill='none' stroke='#EAF1EC' stroke-opacity='.45' stroke-width='1.4'/><circle class='cp' style='--i:1' cx='320' cy='70' r='13' fill='none' stroke='#EAF1EC' stroke-opacity='.45' stroke-width='1.4'/><circle class='cp' style='--i:2' cx='520' cy='330' r='13' fill='none' stroke='#EAF1EC' stroke-opacity='.45' stroke-width='1.4'/><circle class='cp' style='--i:3' cx='660' cy='360' r='13' fill='none' stroke='#EAF1EC' stroke-opacity='.45' stroke-width='1.4'/><circle class='cp' style='--i:4' cx='700' cy='250' r='13' fill='none' stroke='#EAF1EC' stroke-opacity='.45' stroke-width='1.4'/><circle class='cp' style='--i:5' cx='110' cy='300' r='13' fill='none' stroke='#EAF1EC' stroke-opacity='.45' stroke-width='1.4'/><circle class='cp' style='--i:6' cx='450' cy='420' r='13' fill='none' stroke='#EAF1EC' stroke-opacity='.45' stroke-width='1.4'/><circle class='old' cx='230' cy='355' r='20' fill='none' stroke='#EAF1EC' stroke-width='1.5' stroke-dasharray='3 4'/><circle class='tr' style='--i:0' cx='240.3' cy='303.5' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:1' cx='246.6' cy='285.6' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:2' cx='253.9' cy='268.8' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:3' cx='262.4' cy='253.2' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:4' cx='271.8' cy='238.8' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:5' cx='282.2' cy='225.5' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:6' cx='293.5' cy='213.3' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:7' cx='305.6' cy='202.3' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:8' cx='318.5' cy='192.3' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:9' cx='332.1' cy='183.4' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:10' cx='346.3' cy='175.6' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:11' cx='361.0' cy='168.8' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:12' cx='376.3' cy='163.1' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:13' cx='392.0' cy='158.4' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:14' cx='408.0' cy='154.7' r='5' fill='#EAF1EC'/><circle class='tr' style='--i:15' cx='424.4' cy='152.0' r='5' fill='#D9A441'/><circle class='tr' style='--i:16' cx='441.0' cy='150.3' r='5' fill='#D9A441'/><circle class='tr' style='--i:17' cx='457.8' cy='149.5' r='5' fill='#D9A441'/><circle class='tr' style='--i:18' cx='474.7' cy='149.8' r='5' fill='#D9A441'/><circle class='tr' style='--i:19' cx='491.7' cy='150.9' r='5' fill='#D9A441'/><circle class='tr' style='--i:20' cx='508.6' cy='153.0' r='5' fill='#D9A441'/><circle class='ring2' cx='580' cy='170' r='40' fill='none' stroke='#D9A441' stroke-width='1.5' stroke-dasharray='3 5'/><circle class='ring' cx='580' cy='170' r='22' fill='none' stroke='#D9A441' stroke-width='1.5'/><circle cx='580' cy='170' r='12' fill='#D9A441'/></svg>", "energy-app": "<svg class='cov c-en' preserveAspectRatio='xMidYMid slice' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'><rect width='800' height='500' fill='#E6E7E0'/><circle class='e' style='--i:0' cx='48.0' cy='70.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:0' cx='48.0' cy='83.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:0' cx='48.0' cy='96.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:0' cx='48.0' cy='109.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:0' cx='48.0' cy='122.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:0' cx='48.0' cy='135.0' r='2.8' fill='#1D4F3E'/><circle cx='48.0' cy='148.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='48.0' cy='161.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='57.6' cy='70.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:1' cx='57.6' cy='83.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:1' cx='57.6' cy='96.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:1' cx='57.6' cy='109.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:1' cx='57.6' cy='122.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:1' cx='57.6' cy='135.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:1' cx='57.6' cy='148.0' r='2.8' fill='#1D4F3E'/><circle cx='57.6' cy='161.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='67.2' cy='70.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='67.2' cy='83.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='67.2' cy='96.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:2' cx='67.2' cy='109.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:2' cx='67.2' cy='122.0' r='2.8' fill='#1D4F3E'/><circle cx='67.2' cy='135.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='67.2' cy='148.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='67.2' cy='161.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='76.8' cy='70.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:3' cx='76.8' cy='83.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:3' cx='76.8' cy='96.0' r='2.8' fill='#1D4F3E'/><circle cx='76.8' cy='109.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:3' cx='76.8' cy='122.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:3' cx='76.8' cy='135.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:3' cx='76.8' cy='148.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:3' cx='76.8' cy='161.0' r='2.8' fill='#1D4F3E'/><circle cx='86.4' cy='70.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='86.4' cy='83.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:4' cx='86.4' cy='96.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:4' cx='86.4' cy='109.0' r='2.8' fill='#1D4F3E'/><circle cx='86.4' cy='122.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:4' cx='86.4' cy='135.0' r='2.8' fill='#1D4F3E'/><circle cx='86.4' cy='148.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='86.4' cy='161.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:5' cx='96.0' cy='70.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:5' cx='96.0' cy='83.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:5' cx='96.0' cy='96.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:5' cx='96.0' cy='109.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:5' cx='96.0' cy='122.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:5' cx='96.0' cy='135.0' r='2.8' fill='#1D4F3E'/><circle cx='96.0' cy='148.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:5' cx='96.0' cy='161.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:6' cx='105.6' cy='70.0' r='2.8' fill='#1D4F3E'/><circle cx='105.6' cy='83.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:6' cx='105.6' cy='96.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:6' cx='105.6' cy='109.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:6' cx='105.6' cy='122.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:6' cx='105.6' cy='135.0' r='2.8' fill='#1D4F3E'/><circle cx='105.6' cy='148.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:6' cx='105.6' cy='161.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:7' cx='115.2' cy='70.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:7' cx='115.2' cy='83.0' r='2.8' fill='#1D4F3E'/><circle cx='115.2' cy='96.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:7' cx='115.2' cy='109.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:7' cx='115.2' cy='122.0' r='2.8' fill='#1D4F3E'/><circle cx='115.2' cy='135.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:7' cx='115.2' cy='148.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:7' cx='115.2' cy='161.0' r='2.8' fill='#1D4F3E'/><circle cx='124.8' cy='70.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:8' cx='124.8' cy='83.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:8' cx='124.8' cy='96.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:8' cx='124.8' cy='109.0' r='2.8' fill='#1D4F3E'/><circle cx='124.8' cy='122.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:8' cx='124.8' cy='135.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:8' cx='124.8' cy='148.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:8' cx='124.8' cy='161.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:9' cx='134.4' cy='70.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:9' cx='134.4' cy='83.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:9' cx='134.4' cy='96.0' r='2.8' fill='#1D4F3E'/><circle cx='134.4' cy='109.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='134.4' cy='122.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='134.4' cy='135.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='134.4' cy='148.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='134.4' cy='161.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:10' cx='144.0' cy='70.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:10' cx='144.0' cy='83.0' r='2.8' fill='#1D4F3E'/><circle cx='144.0' cy='96.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='144.0' cy='109.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:10' cx='144.0' cy='122.0' r='2.8' fill='#1D4F3E'/><circle cx='144.0' cy='135.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='144.0' cy='148.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='144.0' cy='161.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:11' cx='153.6' cy='70.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:11' cx='153.6' cy='83.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:11' cx='153.6' cy='96.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:11' cx='153.6' cy='109.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:11' cx='153.6' cy='122.0' r='2.8' fill='#1D4F3E'/><circle cx='153.6' cy='135.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:11' cx='153.6' cy='148.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:11' cx='153.6' cy='161.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:12' cx='163.2' cy='70.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:12' cx='163.2' cy='83.0' r='2.8' fill='#1D4F3E'/><circle cx='163.2' cy='96.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:12' cx='163.2' cy='109.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:12' cx='163.2' cy='122.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:12' cx='163.2' cy='135.0' r='2.8' fill='#1D4F3E'/><circle cx='163.2' cy='148.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:12' cx='163.2' cy='161.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:13' cx='172.8' cy='70.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:13' cx='172.8' cy='83.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:13' cx='172.8' cy='96.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:13' cx='172.8' cy='109.0' r='2.8' fill='#1D4F3E'/><circle cx='172.8' cy='122.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:13' cx='172.8' cy='135.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:13' cx='172.8' cy='148.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:13' cx='172.8' cy='161.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:14' cx='182.4' cy='70.0' r='2.8' fill='#1D4F3E'/><circle cx='182.4' cy='83.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:14' cx='182.4' cy='96.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:14' cx='182.4' cy='109.0' r='2.8' fill='#1D4F3E'/><circle cx='182.4' cy='122.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:14' cx='182.4' cy='135.0' r='2.8' fill='#1D4F3E'/><circle cx='182.4' cy='148.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:14' cx='182.4' cy='161.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:15' cx='192.0' cy='70.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:15' cx='192.0' cy='83.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:15' cx='192.0' cy='96.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:15' cx='192.0' cy='109.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:15' cx='192.0' cy='122.0' r='2.8' fill='#1D4F3E'/><circle cx='192.0' cy='135.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='192.0' cy='148.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:15' cx='192.0' cy='161.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:16' cx='201.6' cy='70.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:16' cx='201.6' cy='83.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:16' cx='201.6' cy='96.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:16' cx='201.6' cy='109.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:16' cx='201.6' cy='122.0' r='2.8' fill='#1D4F3E'/><circle cx='201.6' cy='135.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:16' cx='201.6' cy='148.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:16' cx='201.6' cy='161.0' r='2.8' fill='#1D4F3E'/><circle cx='211.2' cy='70.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:17' cx='211.2' cy='83.0' r='2.8' fill='#1D4F3E'/><circle cx='211.2' cy='96.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:17' cx='211.2' cy='109.0' r='2.8' fill='#1D4F3E'/><circle cx='211.2' cy='122.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='211.2' cy='135.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='211.2' cy='148.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='211.2' cy='161.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:18' cx='220.8' cy='70.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:18' cx='220.8' cy='83.0' r='2.8' fill='#1D4F3E'/><circle class='e' style='--i:18' cx='220.8' cy='96.0' r='2.8' fill='#1D4F3E'/><circle cx='220.8' cy='109.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='220.8' cy='122.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='220.8' cy='135.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:18' cx='220.8' cy='148.0' r='2.8' fill='#1D4F3E'/><circle cx='220.8' cy='161.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='230.4' cy='70.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='230.4' cy='83.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='230.4' cy='96.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:19' cx='230.4' cy='109.0' r='2.8' fill='#1D4F3E'/><circle cx='230.4' cy='122.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle cx='230.4' cy='135.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><circle class='e' style='--i:19' cx='230.4' cy='148.0' r='2.8' fill='#1D4F3E'/><circle cx='230.4' cy='161.0' r='2.4' fill='none' stroke='#1D4F3E' stroke-opacity='.45' stroke-width='.9'/><rect class='bm' style='--i:0' x='48' y='238' width='28' height='28' rx='3' fill='none' stroke='#121614' stroke-width='1.2'/><rect class='bm' style='--i:1' x='86' y='238' width='28' height='28' rx='3' fill='none' stroke='#121614' stroke-width='1.2'/><rect class='bm' style='--i:2' x='124' y='238' width='28' height='28' rx='3' fill='#D9A441' stroke='#121614' stroke-width='1.2'/><rect class='bm' style='--i:3' x='162' y='238' width='28' height='28' rx='3' fill='none' stroke='#121614' stroke-width='1.2'/><rect class='bm' style='--i:4' x='200' y='238' width='28' height='28' rx='3' fill='none' stroke='#121614' stroke-width='1.2'/><g class='pp' style='--i:0'><circle cx='54' cy='338' r='5' fill='#121614'/><path d='M46 358 Q54 342 62 358' fill='#121614'/></g><g class='pp' style='--i:1'><circle cx='77' cy='338' r='5' fill='#121614'/><path d='M69 358 Q77 342 85 358' fill='#121614'/></g><g class='pp' style='--i:2'><circle cx='100' cy='338' r='5' fill='#121614'/><path d='M92 358 Q100 342 108 358' fill='#121614'/></g><g class='pp' style='--i:3'><circle cx='123' cy='338' r='5' fill='#121614'/><path d='M115 358 Q123 342 131 358' fill='#121614'/></g><g class='pp' style='--i:4'><circle cx='146' cy='338' r='5' fill='#121614'/><path d='M138 358 Q146 342 154 358' fill='#121614'/></g><g class='pp' style='--i:5'><circle cx='169' cy='338' r='5' fill='#121614'/><path d='M161 358 Q169 342 177 358' fill='#121614'/></g><g class='pp' style='--i:6'><circle cx='192' cy='338' r='5' fill='#121614'/><path d='M184 358 Q192 342 200 358' fill='#121614'/></g><g class='pp' style='--i:7'><circle cx='215' cy='338' r='5' fill='#121614'/><path d='M207 358 Q215 342 223 358' fill='#121614'/></g><g class='pp' style='--i:8'><circle cx='54' cy='382' r='5' fill='#121614'/><path d='M46 402 Q54 386 62 402' fill='#121614'/></g><g class='pp' style='--i:9'><circle cx='77' cy='382' r='5' fill='#121614'/><path d='M69 402 Q77 386 85 402' fill='#121614'/></g><g class='pp' style='--i:10'><circle cx='100' cy='382' r='5' fill='#121614'/><path d='M92 402 Q100 386 108 402' fill='#121614'/></g><g class='pp' style='--i:11'><circle cx='123' cy='382' r='5' fill='#121614'/><path d='M115 402 Q123 386 131 402' fill='#121614'/></g><g class='pp' style='--i:12'><circle cx='146' cy='382' r='5' fill='#121614'/><path d='M138 402 Q146 386 154 402' fill='#121614'/></g><g class='pp' style='--i:13'><circle cx='169' cy='382' r='5' fill='#121614'/><path d='M161 402 Q169 386 177 402' fill='#121614'/></g><g class='pp' style='--i:14'><circle cx='192' cy='382' r='5' fill='#121614'/><path d='M184 402 Q192 386 200 402' fill='#121614'/></g><g class='pp' style='--i:15'><circle cx='215' cy='382' r='5' fill='#121614'/><path d='M207 402 Q215 386 223 402' fill='#121614'/></g><path d='M250 122 C 330 122, 340 250, 400 250' fill='none' stroke='#121614' stroke-opacity='.3'/><path d='M250 252 C 330 252, 340 250, 400 250' fill='none' stroke='#121614' stroke-opacity='.3'/><path d='M250 370 C 330 370, 340 250, 400 250' fill='none' stroke='#121614' stroke-opacity='.3'/><g class='ws'><circle cx='440' cy='234' r='27' fill='none' stroke='#121614' stroke-width='1.4'/><circle cx='454' cy='259' r='27' fill='none' stroke='#121614' stroke-width='1.4'/><circle cx='426' cy='259' r='27' fill='none' stroke='#121614' stroke-width='1.4'/></g><g class='arw'><line x1='485' y1='250' x2='535' y2='250' stroke='#121614' stroke-width='1.4'/><path d='M527 244 L537 250 L527 256' fill='none' stroke='#121614' stroke-width='1.4'/></g><rect x='560' y='62' width='200' height='150' rx='10' fill='#F4F4F0' stroke='#121614' stroke-width='1.3'/><line x1='590' y1='140' x2='740' y2='140' stroke='#121614' stroke-opacity='.5'/><circle class='nd' style='--i:0' cx='590' cy='140' r='6' fill='#1D4F3E'/><rect x='581' y='92' width='18' height='14' rx='2' fill='#D9A441' fill-opacity='0.9'/><rect x='581' y='166' width='18' height='14' rx='2' fill='#1D4F3E' fill-opacity='.35'/><circle class='nd' style='--i:1' cx='630' cy='140' r='6' fill='#1D4F3E'/><rect x='621' y='102' width='18' height='14' rx='2' fill='#D9A441' fill-opacity='0.45'/><rect x='621' y='172' width='18' height='14' rx='2' fill='#1D4F3E' fill-opacity='.35'/><circle class='nd' style='--i:2' cx='670' cy='140' r='6' fill='#1D4F3E'/><rect x='661' y='92' width='18' height='14' rx='2' fill='#D9A441' fill-opacity='0.9'/><rect x='661' y='178' width='18' height='14' rx='2' fill='#1D4F3E' fill-opacity='.35'/><circle class='nd' style='--i:3' cx='710' cy='140' r='6' fill='#1D4F3E'/><rect x='701' y='102' width='18' height='14' rx='2' fill='#D9A441' fill-opacity='0.45'/><rect x='701' y='166' width='18' height='14' rx='2' fill='#1D4F3E' fill-opacity='.35'/><circle class='nd' style='--i:4' cx='740' cy='140' r='6' fill='#1D4F3E'/><rect x='731' y='92' width='18' height='14' rx='2' fill='#D9A441' fill-opacity='0.9'/><rect x='731' y='172' width='18' height='14' rx='2' fill='#1D4F3E' fill-opacity='.35'/><rect x='560' y='262' width='200' height='170' rx='10' fill='#F4F4F0' stroke='#121614' stroke-width='1.3'/><line x1='576' y1='308' x2='744' y2='308' stroke='#121614' stroke-opacity='.15'/><line x1='576' y1='348' x2='744' y2='348' stroke='#121614' stroke-opacity='.15'/><line x1='576' y1='388' x2='744' y2='388' stroke='#121614' stroke-opacity='.15'/><rect class='blk' style='--i:0' x='578' y='300' width='70' height='16' rx='4' fill='#D9A441'/><rect class='blk' style='--i:1' x='640' y='340' width='60' height='16' rx='4' fill='#1D4F3E'/><rect class='blk' style='--i:2' x='690' y='380' width='52' height='16' rx='4' fill='#1D4F3E'/></svg>", "metro": "<svg class='cov c-me' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500' preserveAspectRatio='xMidYMid slice' aria-hidden='true'><rect width='800' height='500' fill='#121614'/><path d='M40 330 L210 330 L290 250 L520 250 L600 170 L760 170' fill='none' stroke='#D9A441' stroke-width='14' stroke-linejoin='round' stroke-linecap='round'/><circle class='train' cx='0' cy='0' r='9' fill='#EAF1EC'/><path class='jp' d='M60 420 C 120 380, 150 400, 150 340 M150 320 C 150 260, 230 230, 250 280 M330 240 C 360 140, 420 150, 420 240 M510 260 C 520 340, 600 320, 560 220 M640 160 C 650 90, 720 90, 720 160' fill='none' stroke='#EAF1EC' stroke-width='1.6' stroke-dasharray='2 6' stroke-linecap='round'/><circle class='st' style='--i:0' cx='70' cy='330' r='11' fill='#121614' stroke='#EAF1EC' stroke-width='4'/><circle class='st' style='--i:1' cx='150' cy='330' r='11' fill='#121614' stroke='#EAF1EC' stroke-width='4'/><circle class='st' style='--i:2' cx='250' cy='290' r='11' fill='#121614' stroke='#EAF1EC' stroke-width='4'/><circle class='st' style='--i:3' cx='330' cy='250' r='11' fill='#121614' stroke='#EAF1EC' stroke-width='4'/><circle class='st' style='--i:4' cx='420' cy='250' r='11' fill='#121614' stroke='#EAF1EC' stroke-width='4'/><circle class='st' style='--i:5' cx='510' cy='250' r='11' fill='#121614' stroke='#EAF1EC' stroke-width='4'/><circle class='st' style='--i:6' cx='560' cy='210' r='11' fill='#121614' stroke='#EAF1EC' stroke-width='4'/><circle class='st' style='--i:7' cx='640' cy='170' r='11' fill='#121614' stroke='#EAF1EC' stroke-width='4'/><circle class='st' style='--i:8' cx='720' cy='170' r='11' fill='#121614' stroke='#EAF1EC' stroke-width='4'/><rect class='mk' style='--i:0' x='86' y='366' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:1' x='166' y='376' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:2' x='111' y='241' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:3' x='196' y='201' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:4' x='266' y='191' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:5' x='291' y='311' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:6' x='356' y='171' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:7' x='386' y='311' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:8' x='446' y='171' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:9' x='461' y='311' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:10' x='536' y='321' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:11' x='581' y='251' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:12' x='606' y='96' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:13' x='681' y='101' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/><rect class='mk' style='--i:14' x='736' y='221' width='18' height='18' fill='none' stroke='#D5E1D9' stroke-width='1.3'/></svg>", "nostra": "<svg class='cov c-no' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500' preserveAspectRatio='xMidYMid slice' aria-hidden='true'><rect width='800' height='500' fill='#D5E1D9'/><circle cx='400' cy='250' r='120' fill='#EAF1EC' stroke='#121614' stroke-width='1.6'/><circle class='tr' cx='400' cy='250' r='98' fill='none' stroke='#121614' stroke-opacity='.25' stroke-dasharray='2 6'/><g class='leaf'><path d='M352 290 C 360 200, 430 188, 452 204 C 448 270, 390 302, 352 290 Z' fill='#1D4F3E'/><path d='M352 290 C 390 260, 420 230, 452 204' fill='none' stroke='#D5E1D9' stroke-width='2'/></g><g class='p' style='--i:0;--dx:-0.0px;--dy:16.0px'><line x1='400.0' y1='68.0' x2='400.0' y2='122.0' stroke='#121614' stroke-width='1.4'/><circle cx='400.0' cy='68.0' r='17' fill='#1D4F3E' stroke='#121614' stroke-width='1.4'/></g><g class='p' style='--i:1;--dx:-8.0px;--dy:13.9px'><line x1='491.0' y1='92.4' x2='464.0' y2='139.1' stroke='#121614' stroke-width='1.4'/><circle cx='491.0' cy='92.4' r='17' fill='#D9A441' stroke='#121614' stroke-width='1.4'/></g><g class='p' style='--i:2;--dx:-13.9px;--dy:8.0px'><line x1='557.6' y1='159.0' x2='510.9' y2='186.0' stroke='#121614' stroke-width='1.4'/><circle cx='557.6' cy='159.0' r='17' fill='#121614' stroke='#121614' stroke-width='1.4'/></g><g class='p' style='--i:3;--dx:-16.0px;--dy:-0.0px'><line x1='582.0' y1='250.0' x2='528.0' y2='250.0' stroke='#121614' stroke-width='1.4'/><circle cx='582.0' cy='250.0' r='17' fill='#D5E1D9' stroke='#121614' stroke-width='1.4'/></g><g class='p' style='--i:4;--dx:-13.9px;--dy:-8.0px'><line x1='557.6' y1='341.0' x2='510.9' y2='314.0' stroke='#121614' stroke-width='1.4'/><circle cx='557.6' cy='341.0' r='17' fill='#1D4F3E' stroke='#121614' stroke-width='1.4'/></g><g class='p' style='--i:5;--dx:-8.0px;--dy:-13.9px'><line x1='491.0' y1='407.6' x2='464.0' y2='360.9' stroke='#121614' stroke-width='1.4'/><circle cx='491.0' cy='407.6' r='17' fill='#D9A441' stroke='#121614' stroke-width='1.4'/></g><g class='p' style='--i:6;--dx:-0.0px;--dy:-16.0px'><line x1='400.0' y1='432.0' x2='400.0' y2='378.0' stroke='#121614' stroke-width='1.4'/><circle cx='400.0' cy='432.0' r='17' fill='#D5E1D9' stroke='#121614' stroke-width='1.4'/></g><g class='p' style='--i:7;--dx:8.0px;--dy:-13.9px'><line x1='309.0' y1='407.6' x2='336.0' y2='360.9' stroke='#121614' stroke-width='1.4'/><circle cx='309.0' cy='407.6' r='17' fill='#121614' stroke='#121614' stroke-width='1.4'/></g><g class='p' style='--i:8;--dx:13.9px;--dy:-8.0px'><line x1='242.4' y1='341.0' x2='289.1' y2='314.0' stroke='#121614' stroke-width='1.4'/><circle cx='242.4' cy='341.0' r='17' fill='#1D4F3E' stroke='#121614' stroke-width='1.4'/></g><g class='p' style='--i:9;--dx:16.0px;--dy:-0.0px'><line x1='218.0' y1='250.0' x2='272.0' y2='250.0' stroke='#121614' stroke-width='1.4'/><circle cx='218.0' cy='250.0' r='17' fill='#D9A441' stroke='#121614' stroke-width='1.4'/></g><g class='p' style='--i:10;--dx:13.9px;--dy:8.0px'><line x1='242.4' y1='159.0' x2='289.1' y2='186.0' stroke='#121614' stroke-width='1.4'/><circle cx='242.4' cy='159.0' r='17' fill='#D5E1D9' stroke='#121614' stroke-width='1.4'/></g><g class='p' style='--i:11;--dx:8.0px;--dy:13.9px'><line x1='309.0' y1='92.4' x2='336.0' y2='139.1' stroke='#121614' stroke-width='1.4'/><circle cx='309.0' cy='92.4' r='17' fill='#121614' stroke='#121614' stroke-width='1.4'/></g></svg>"};
+if(window.matchMedia&&matchMedia("(hover:none)").matches)document.documentElement.classList.add("touch");
+const P = [
+ {
+  id:"design-unit-repositioning", n:"01",
+  title:"Design Unit Repositioning",
+  sub:"Researching how a design team is seen, sold and valued, inside its own company.",
+  short:"An internal R&D project I proposed and led: 21 interviews with account managers and senior colleagues that reshaped the positioning of BIP's design unit.",
+  tags:[["Internal R&D","k"],["Strategic design · Research","g"],["Consulting",""]],
+  ill:"ill-repositioning.svg", illAlt:"A positioning map: a trail of 21 interview dots leads the unit from its current spot, among competitors, to a new position",
+  meta:[["Services","Strategic Design · User Research · Co-design"],["Industry","Consulting"],["Role","Initiator and project lead · Interviewer · Workshop facilitator"],["Timeline","3 months"]],
+  numbers:[["21","in-depth interviews"],["15","account managers"],["6","senior colleagues"]],
+  challenge:["Consulting is changing. Officina, BIP's design unit, needed to understand how its value is perceived and sold inside the company, how it compares with competitors and where it falls short of market needs, to define a clearer positioning."],
+  approach:["I proposed and led this internal R&D project: market and competitor research, a review of the unit's services, then 21 interviews with 15 account managers and 6 senior colleagues. The insights became a new strategic direction, defined with leadership in a workshop."],
+  outcome:"One clear strategic direction for the unit, built on mapped insights and a competitor landscape, and a list of 5 practical actions to put it into practice.",
+  process:[
+   {k:"00",t:"Project Direction",d:"An internal R&D initiative that I proposed, structured and led, to investigate and redefine Officina's positioning in response to the evolving consulting market. Within a team of five, I defined the research approach, structured the phases and guided the project from initial exploration to strategic reframing."},
+   {k:"01",t:"Research & Strategic Exploration",d:"An exploratory phase to build a solid understanding of the context in which Officina operates, combining market perspectives, reference models and an internal review of its evolving capabilities.",h:["Researched strategic design frameworks and methodologies","Benchmarked competitors, analysing how they present themselves and the value they promise","Mapped Officina's current services"]},
+   {k:"02",t:"Inside View",d:"Interviews with BIP account managers with different levels and patterns of collaboration with Officina, to understand how the unit is perceived, involved and sold.",h:["Defined stakeholder clusters and tailored interview guides","Interviewed 15 account managers on how Officina is perceived, involved and sold"]},
+   {k:"03",t:"Senior View",d:"Interviews with 6 senior colleagues, bringing first-hand experience of how consultancies position, sell and deliver design.",h:["Compared how competitors frame and sell design capabilities","Cross-checked internal assumptions against outside experience","Assessed whether the evidence was sufficient or required further iterations"]},
+   {k:"04",t:"Strategic Reframing",d:"All insights were analysed, classified and translated into a new strategic direction, defined together with Officina's leadership and managers in a dedicated workshop.",h:["Analysed and classified insights from the previous phases","Built a competitor map to clarify differentiation opportunities","Designed and facilitated a strategic workshop with leadership and managers","Guided the discussion on long-term value, differentiation, strengths and weaknesses","Delivered a mapped set of insights and pain points, competitor landscape and strategic positioning","Defined 5 practical actions to put the new positioning into practice"]}
+  ],
+  media:[{type:"ill"},{type:"method",cap:"Research design",conf:"Abstracted · internal project",ph:[["Explore","Desk","Frameworks, competitor benchmark, service map"],["Inside view","15","Account managers: how design is perceived and sold"],["Senior view","6","Senior colleagues: an experienced view on how design is sold"],["Reframe","1 + 5","Leadership workshop, one strategic direction and 5 practical actions"]]},{type:"img",src:"cover-02.webp",cap:"Synthesis wall in the BIP office, Milan"}],
+  conf:"Internal project: findings are confidential, so research design and figures are shown in abstracted form."
+ },
+ {
+  id:"energy-app", n:"02",
+  title:"Utility App, Research & MVP",
+  sub:"Exploring the value of a dedicated digital experience, with evidence before code.",
+  short:"A survey of 1,300+ customers (800+ answers), 16 in-branch interviews and three co-design workshops with the company's teams shaped a tested MVP and roadmap.",
+  tags:[["Client","k"],["UX research · Co-design","g"],["Utilities",""]],
+  ill:"ill-energy.svg", illAlt:"Survey answers, a competitor benchmark and 16 in-branch interviews flow into three workshops, producing an insight map and an MVP roadmap",
+  meta:[["Services","Workshop · Prototyping · User Research"],["Industry","Utilities"],["Role","Service Designer"],["Timeline","4 months"]],
+  numbers:[["1,300+","customers called"],["800+","survey answers"],["16","in-branch interviews"],["3","co-design workshops"]],
+  challenge:["An Italian utility provider wanted to know whether a dedicated app would be valuable and feasible, and what it should offer, before building it. The answer had to come from customers, through research, co-design and prototyping."],
+  approach:["A telephone survey (1,300+ customers called, 800+ answers), 16 quick interviews at the brand's service branches and a competitor benchmark fed three co-design workshops with business and IT. I then designed and usability-tested a high-fidelity Figma prototype."],
+  outcome:"A full picture of customers' insights, behaviours and preferences; the decision to develop the app concept; and a shared MVP and roadmap agreed by business and IT.",
+  process:[
+   {k:"01",t:"User Research",d:"A mixed-method research phase to understand customers' digital behaviours, needs and expectations when interacting with utility services.",h:["Defined research objectives and interview scripts","Conducted a large-scale telephone survey (1,300+ customers called, 800+ answers)","Carried out 16 quick in-person interviews at the brand's customer service branches","Analysed quantitative and qualitative findings","Mapped digital behaviours and preferred interaction channels","Identified recurring needs and opportunities"]},
+   {k:"02",t:"Co-design Workshops",d:"Three collaborative workshops brought together business stakeholders, technical teams and designers to align on the future vision of the app, define priorities and co-create its core functionalities.",h:["Shared research findings and facilitated ideation sessions","Presented and refined the first interactive prototype","Prioritised features and defined the MVP together with stakeholders"]},
+   {k:"03",t:"UX/UI Design",d:"The app was designed around users' most frequent tasks while staying consistent with the company's design system and visual identity.",h:["Conducted competitive benchmarking","Designed user flows and information architecture","Built a modular interactive prototype in Figma","Optimised usability, accessibility and visual hierarchy"]},
+   {k:"04",t:"User Testing",d:"The prototype was validated through usability testing sessions with real customers.",h:["Moderated usability testing sessions","Evaluated key features including billing, payments and appointment booking","Identified usability issues and recurring interaction patterns","Iterated the prototype based on findings"]},
+   {k:"05",t:"MVP Definition",d:"Research and testing outcomes informed the definition of the MVP and a shared implementation roadmap for business and technical stakeholders.",h:["Prioritised features for phased releases","Produced functional requirements documentation","Defined ownership and implementation roadmap","Presented recommendations and next steps"]}
+  ],
+  media:[{type:"ill"},{type:"method",cap:"Project phases",conf:"Abstracted · client project",ph:[["Research","1,300+","Customers called (800+ answers), plus 16 in-branch interviews and a competitor benchmark"],["Co-design","3","Workshops with business and IT to prioritise features"],["Design","Figma","High-fidelity, modular prototype in the client's design system"],["Test","Users","Moderated usability tests on billing, payments and booking"],["Define","MVP","Phased requirements, ownership and implementation roadmap"]]}],
+  conf:"Client work under NDA: the client's name, data and interfaces are not shown."
+ },
+ {
+  id:"metro", n:"03",
+  title:"Usability in Metro Stations",
+  sub:"Evaluating and improving Milan's metro stations through a human-centred approach.",
+  short:"Master's thesis: a survey with 200+ passengers and 5 in-context usability tests turned into a practical usability guide for transport operators.",
+  tags:[["Academic · Thesis","a"],["UX research · Public sector","g"],["Mobility",""]],
+  ill:"ill-metro.svg", illAlt:"A metro line with stations, a passenger's dotted journey and fifteen numbered markers",
+  meta:[["Services","Service Design · UX Research · Usability Testing · Design Strategy"],["Industry","Public Transport"],["Role","Researcher & Designer"],["Timeline","8 months"]],
+  numbers:[["207","survey participants"],["5","in-context usability tests"],["15","design interventions"]],
+  challenge:["In metro stations, technical requirements often prevail over passengers' experience. Focusing on Milan's Line 1, the aim was to identify needs, behaviours and pain points around comfort, orientation, safety and accessibility, and turn them into practical, scalable recommendations."],
+  approach:["A literature review, an online survey (207 participants) and in-context usability tests with 5 diverse participants, mapping their journeys to find recurring pain points. The result is Designing Usability, a guide of 15 low-cost interventions for existing stations."],
+  outcome:"A human-centred framework to evaluate station usability, plus 15 quick and easy design interventions to improve existing stations, complementing engineering and architecture.",
+  process:[
+   {k:"01",t:"Research & Discovery",d:"An extensive literature review on usability, accessibility and user experience in public transport, followed by mixed-method research on how people experience Milan's Metro Line 1.",h:["Conducted a literature review on usability and public transport","Designed and distributed an online survey (207 participants)","Planned and moderated in-context usability testing sessions (5 users)","Observed real user behaviours across different stations","Investigated comfort, accessibility, safety and wayfinding"]},
+   {k:"02",t:"Research Analysis",d:"Survey findings and usability tests were analysed together to identify recurring patterns, critical pain points and opportunities across the whole passenger journey.",h:["Mapped user journeys from real observations","Identified recurring usability issues across stations","Synthesised research into actionable design insights","Prioritised opportunities by user impact and feasibility"]},
+   {k:"03",t:"Design Framework",d:"Rather than redesigning individual stations, the project developed a practical framework to support the continuous improvement of existing infrastructure.",h:["Defined a usability evaluation framework for metro stations","Developed design principles grounded in research evidence","Organised recommendations into key usability categories","Balanced user needs with realistic implementation constraints"]},
+   {k:"04",t:"Designing Usability",d:"A practical guide of fifteen scalable interventions addressing wayfinding, accessibility, comfort, interaction and perceived safety.",h:["Designed 15 evidence-based recommendations","Produced visual scenarios illustrating each intervention","Developed a scalable toolkit for designers and transport operators","Proposed incremental improvements applicable to existing stations"]}
+  ],
+  media:[{type:"ill"},{type:"img",src:"metro-05.webp",cap:"Wayfinding intervention, visual scenario"},{type:"img",src:"metro-dati.webp",cap:"Survey results"},{type:"img",src:"metro-04.webp",cap:"User journeys from in-context testing"},{type:"img",src:"metro-03.webp",cap:"Insights and pain points by participant"},{type:"img",src:"metro-01.webp",cap:"Research process"},{type:"img",src:"cover-04.webp",cap:"Designing Usability, the guide"},{type:"img",src:"metro-06.webp",cap:"Guide spreads"}]
+ },
+ {
+  id:"nostra", n:"04",
+  title:"Nostra, Participatory Canteen",
+  sub:"Co-designing a student-led canteen to encourage sustainable food habits and community building.",
+  short:"A plant-based canteen for Politecnico di Milano, co-designed with the students who would use it: members help run it in exchange for real benefits.",
+  tags:[["Academic · Team","a"],["Service design · Co-design","g"],["Food",""]],
+  ill:"ill-nostra.svg", illAlt:"People gathered around one round table with a leaf at its centre",
+  meta:[["Services","Service Design · Co-design · Workshop Facilitation"],["Industry","Food Service · Education"],["Timeline","6 months"]],
+  numbers:[["100+","students surveyed"],["2","co-design workshops"],["1","end-to-end service designed"]],
+  challenge:["University canteens treat students as passive users. The goal was a plant-based canteen for Politecnico di Milano that promotes sustainable eating through participation, turning students into active contributors."],
+  approach:["An online survey (100+ students) and two co-design workshops with students from different backgrounds defined roles, rewards and shared values. The result is Nostra, a student-led canteen where members contribute in exchange for meal discounts, certifications and community activities."],
+  outcome:"A canteen students co-run, delivered as a full service concept: service blueprint, stakeholder map, user journeys and participation model.",
+  process:[
+   {k:"01",t:"Research & Discovery",d:"Exploring students' eating habits, perceptions of plant-based diets and expectations towards university dining services.",h:["Surveyed students' attitudes towards plant-based diets (100+ participants)","Analysed behaviours, motivations and barriers","Identified opportunities for community-driven participation","Defined key user needs and service requirements"]},
+   {k:"02",t:"Co-design Workshops",d:"Two workshops with Politecnico students from different academic backgrounds and dietary habits to co-create the future service.",h:["Facilitated co-design sessions with design and engineering students","Defined service roles, responsibilities and interactions","Co-created the reward system and participation model","Established the shared vision and core values of the service"]},
+   {k:"03",t:"Service Design",d:"Insights from research and workshops shaped a participatory service ecosystem, where students help run the canteen while building skills and community.",h:["Designed the end-to-end service ecosystem","Developed the membership and participation model","Defined user journeys and service touchpoints","Structured incentives including meal discounts, certifications and community activities"]}
+  ],
+  media:[{type:"ill"},{type:"video",src:"videos/nostra-video.mp4",poster:"images/nostra-poster.webp",cap:"Nostra, concept video"},{type:"img",src:"nostra-01.webp",cap:"Co-design workshop with students"},{type:"img",src:"nostra-02.webp",cap:"Mapping roles and rewards"},{type:"img",src:"nostra-03.webp",cap:"Service ecosystem"},{type:"img",src:"nostra-04.webp",cap:"Customer journey"},{type:"img",src:"nostra-05.webp",cap:"Member journey"},{type:"img",src:"nostra-06.webp",cap:"Service blueprint"},{type:"img",src:"nostra-07.webp",cap:"Service blueprint, detail"}]
+ }
+];
+
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+$("#workList").innerHTML = P.map(p=>`
+  <a class="row reveal" href="#${p.id}">
+    <span class="n">${p.n}</span>
+    <span class="thumb">${COVERS[p.id]}</span>
+    <span><h3>${p.title}</h3><p>${p.short}</p></span>
+    <span class="tags">${p.tags.map(t=>`<span class="tag ${t[1]}">${t[0]}</span>`).join("")}</span>
+    <span class="go" aria-hidden="true">→</span>
+  </a>`).join("");
+
+function renderCase(p){
+  const i = P.indexOf(p), nx = P[(i+1)%P.length], pv = P[(i-1+P.length)%P.length];
+  const hl = h => `<ul class="hl">${h.map(x=>Array.isArray(x)?`<li>${x[0]}<ul>${x[1].map(y=>`<li>${y}</li>`).join("")}</ul></li>`:`<li>${x}</li>`).join("")}</ul>`;
+  const method = m => `<div class="method${m.ph.length%2?' odd':''}"><span class="conf">${m.conf}</span>${m.ph.map((x,k)=>`<div><span class="mono">Phase ${k+1} · ${x[0]}</span><b>${x[1]}</b><p>${x[2]}</p></div>`).join("")}</div>`;
+  const media = p.media.map(m=>{
+    if(m.type==="ill") return `<figure class="m-ill"><img src="images/${p.ill}" alt="${esc(p.illAlt)}"></figure>`;
+    if(m.type==="method") return `<figure>${method(m)}<figcaption>${m.cap}</figcaption></figure>`;
+    if(m.type==="video") return `<figure><video controls playsinline preload="none" poster="${m.poster}" src="${m.src}"></video><figcaption>${m.cap}</figcaption></figure>`;
+    return `<figure><img class="zoom" src="images/${m.src}" alt="${esc(m.cap)}" loading="lazy"><figcaption>${m.cap}</figcaption></figure>`;
+  }).join("");
+  $("#case").innerHTML = `
+  <div class="cs-top"><a href="#${pv.id}" class="cs-arrow" aria-label="Previous project: ${esc(pv.title)}" title="Previous: ${esc(pv.title)}">←</a><a href="#${nx.id}" class="cs-arrow" aria-label="Next project: ${esc(nx.title)}" title="Next: ${esc(nx.title)}">→</a></div>
+  <div class="cs">
+    <aside class="cs-meta">
+      <div class="kick">${p.tags.map(t=>`<span class="tag ${t[1]}">${t[0]}</span>`).join("")}</div>
+      <h1>${p.title}</h1>
+      <p class="sub">${p.sub}</p>
+      <dl>${p.meta.map(m=>`<div><dt class="mono">${m[0]}</dt><dd>${m[1]}</dd></div>`).join("")}</dl>
+      <ul class="cs-num">${p.numbers.map(n=>`<li><b>${n[0]}</b><span>${n[1]}</span></li>`).join("")}</ul>
+    </aside>
+    <div class="cs-text">
+      <div class="cs-numrow">${p.numbers.map(n=>`<div><b>${n[0]}</b><span>${n[1]}</span></div>`).join("")}</div>
+      <h2 class="lab">The challenge</h2>
+      ${p.challenge.map(c=>`<p>${c}</p>`).join("")}
+      <h2 class="lab">The approach and the solution</h2>
+      ${p.approach.map(c=>`<p>${c}</p>`).join("")}
+      <div class="outcome"><span class="mono">Outcome</span><p>${p.outcome}</p></div>
+      <details class="proc">
+        <summary><span>The process</span><span class="chev" aria-hidden="true"></span></summary>
+        <ol>${p.process.map(s=>`<li><span class="k">${s.k}</span><div><h3>${s.t}</h3><p>${s.d}</p>${s.h?`<span class="mono">Highlights</span>${hl(s.h)}`:""}</div></li>`).join("")}</ol>
+      </details>
+    </div>
+    <div class="cs-media">${media}${p.conf?`<p class="note">${p.conf}</p>`:""}</div>
+  </div>
+  <div class="wrap"><a class="next" href="#${nx.id}"><span><span class="mono">Next project · ${nx.n}</span><h3>${nx.title}</h3></span><span class="arrow">→</span></a></div>`;
+  document.title = p.title + " · Greta Mellaro";
+}
+
+function route(){
+  const h = location.hash.slice(1);
+  const p = P.find(x=>x.id===h);
+  if(p){
+    document.body.classList.add("is-case");
+    renderCase(p);
+    window.scrollTo(0,0);
+  }else{
+    const wasCase = document.body.classList.contains("is-case");
+    document.body.classList.remove("is-case");
+    document.title = "Greta Mellaro · Service Designer";
+    if(wasCase && h){ const t=document.getElementById(h); if(t) requestAnimationFrame(()=>t.scrollIntoView()); }
+  }
+  observe();
+}
+
+let io;
+function observe(){
+  if(!("IntersectionObserver" in window)){document.querySelectorAll(".reveal").forEach(e=>e.classList.add("in"));return}
+  io = io || new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll(".reveal:not(.in)").forEach(e=>io.observe(e));
+}
+window.addEventListener("hashchange",route);
+route();
+
+// lightbox
+const lb=$("#lb");
+document.addEventListener("click",e=>{
+  const im=e.target.closest(".gallery img, .cs-media img.zoom");
+  if(im){lb.querySelector("img").src=im.src;lb.querySelector("img").alt=im.alt;lb.classList.add("on")}
+});
+lb.addEventListener("click",e=>{if(e.target!==lb.querySelector("img"))lb.classList.remove("on")});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")lb.classList.remove("on")});
+
+// copy email
+$("#copyMail").addEventListener("click",async()=>{
+  try{await navigator.clipboard.writeText("greta.mellaro@outlook.com");toast("Email copied")}
+  catch(_){toast("greta.mellaro@outlook.com")}
+});
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("on");setTimeout(()=>el.classList.remove("on"),1800)}
+</script>
+<script>
+(()=>{const h=document.querySelector('.hero');if(!h)return;let done=false;
+const go=()=>{if(done)return;done=true;h.classList.add('lined');['pointermove','click','scroll','touchstart','keydown'].forEach(e=>removeEventListener(e,go))};
+['pointermove','click','scroll','touchstart','keydown'].forEach(e=>addEventListener(e,go,{passive:true}));})();
+</script><script>
+(()=>{const em=document.querySelector('.hero h1 .rot');if(!em)return;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const words=["UX research","interviews","surveys","workshops","usability testing","journey mapping","prototyping"];
+const meas=document.createElement('em');meas.className='rot-meas';meas.setAttribute('aria-hidden','true');em.parentNode.appendChild(meas);
+const w=t=>{meas.textContent=t;return meas.getBoundingClientRect().width};
+let i=0,p0=0,busy=false;
+const fit=()=>{em.style.width=(w(words[i])+p0)+'px'};
+const next=()=>{if(busy)return;busy=true;i=(i+1)%words.length;const old=em.querySelector('span:not(.out)');
+ if(reduce){old.textContent=words[i];fit();busy=false;return}
+ old.classList.add('out');const nw=document.createElement('span');nw.className='in';nw.textContent=words[i];em.appendChild(nw);
+ fit();nw.getBoundingClientRect();nw.classList.remove('in');setTimeout(()=>{old.remove();busy=false},650)};
+(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>{p0=em.offsetWidth-em.querySelector('span').offsetWidth;fit()});
+let tm=null;
+const stop=()=>{clearInterval(tm);tm=null};
+const play=()=>{stop();tm=setInterval(next,1200)};
+em.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'){next();play()}});
+em.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')stop()});
+em.addEventListener('click',()=>{next();if(tm)play()});
+em.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();next()}});
+addEventListener('resize',fit);})();
+</script><script>
+(()=>{const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt=n=>n.toLocaleString('en-US');
+document.querySelectorAll('.facts .fact').forEach(f=>{const el=f.querySelector('.num');const to=+el.dataset.to;let raf=0;
+ const run=()=>{if(reduce)return;cancelAnimationFrame(raf);const t0=performance.now(),d=to>100?900:600;
+  const step=t=>{const p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);el.textContent=fmt(Math.round(to*e));if(p<1)raf=requestAnimationFrame(step)};raf=requestAnimationFrame(step)};
+ f.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')run()});
+ f.addEventListener('focus',run);
+ f.addEventListener('click',()=>{const on=!f.classList.contains('on');document.querySelectorAll('.facts .fact.on').forEach(x=>x.classList.remove('on'));if(on){f.classList.add('on');run()}});
+});})();
+</script></body>
+</html>
