@@ -229,14 +229,22 @@ body.is-case .case{display:block}
 .cs-arrow:hover{color:var(--pine)}
 .cs{display:grid;grid-template-columns:minmax(210px,2.6fr) minmax(320px,4.8fr) 5.4fr;gap:clamp(28px,3.5vw,56px);padding:8px var(--pad) 0;max-width:1640px;margin:0 auto;align-items:start}
 @media(min-width:1101px) and (min-height:600px){
- .cs{height:calc(100vh - 106px);height:calc(100dvh - 106px);align-items:stretch}
- .cs-meta,.cs-text{overflow-y:auto;overflow-x:hidden}
- .cs-media{overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
- .cs-meta,.cs-text{scrollbar-width:none}
+ .cs-meta,.cs-text{position:sticky;top:72px;max-height:calc(100vh - 84px);overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
  .cs-meta::-webkit-scrollbar,.cs-text::-webkit-scrollbar{display:none}
- .cs-media{padding-right:6px;padding-bottom:48px}
- .cs-text{padding-bottom:32px}
+ .cs-text{padding-bottom:24px}
+ .cs-media{padding-bottom:24px}
 }
+.cs-fade{position:fixed;bottom:0;height:110px;pointer-events:none;background:linear-gradient(to bottom,rgba(241,241,236,0),var(--paper) 85%);opacity:0;transition:opacity .4s;z-index:15}
+.cs-hint{position:fixed;bottom:22px;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);background:#fff;border:1px solid var(--rule);border-radius:99px;padding:6px 12px;opacity:0;transform:translate(-50%,8px);transition:opacity .4s,transform .4s;z-index:16;pointer-events:none}
+.cs-hint .t{display:inline-flex;gap:6px;align-items:center;max-width:120px;overflow:hidden;white-space:nowrap;transition:max-width .5s,opacity .3s}
+.cs-hint .t i{font-style:normal;display:inline-block;animation:hint-bob 1.4s ease-in-out infinite}
+.cs-hint.scrolled .t{max-width:0;opacity:0;margin-right:-10px}
+.cs-hint .c{color:var(--pine);font-weight:500}
+.cs-hint.on,.cs-fade.on{opacity:1}
+.cs-hint.on{transform:translate(-50%,0)}
+@keyframes hint-bob{50%{transform:translateY(3px)}}
+@media(max-width:1100px),(max-height:599px){.cs-hint,.cs-fade{display:none}}
+@media(prefers-reduced-motion:reduce){.cs-hint .t i{animation:none}}
 .cs-meta .kick{display:flex;flex-wrap:wrap;gap:6px}
 .cs-meta h1{font-size:clamp(28px,2.6vw,40px);font-weight:500;letter-spacing:-.025em;line-height:1.05;margin-top:18px}
 .cs-meta .sub{font-family:var(--serif);font-style:italic;font-size:clamp(19px,1.5vw,22px);line-height:1.3;color:var(--ink-2);margin-top:14px}
@@ -357,9 +365,10 @@ body.is-case .case{display:block}
 .hero{position:relative}
 .hd{position:absolute;width:14px;height:14px;border-radius:50%;z-index:0;pointer-events:none;
   left:var(--x);top:var(--y);background:var(--c);
-  transition:left 1.3s cubic-bezier(.65,0,.25,1),top 1.3s cubic-bezier(.65,0,.25,1),background-color .9s ease .7s,transform .4s;
-  transition-delay:var(--d),var(--d),calc(var(--d) + .6s),0s;
+  transition:left 1.9s cubic-bezier(.65,0,.25,1),top 1.9s cubic-bezier(.65,0,.25,1),background-color 1.2s ease 1s,transform .4s;
+  transition-delay:calc(var(--d) * 1.5),calc(var(--d) * 1.5),calc(var(--d) * 1.5 + .9s),0s;
   animation:hd-float 3.2s ease-in-out infinite;animation-delay:var(--fd)}
+.hero.hd-reset .hd{transition:none!important}
 .hero.lined .hd{left:var(--lx);top:var(--ly);background:var(--pine);animation:none}
 .hero-grid{position:relative;z-index:1}
 @keyframes hd-float{50%{transform:translateY(-6px)}}
@@ -382,6 +391,9 @@ body.is-case .case{display:block}
 .facts .fact b,.facts .fact span{position:relative;transition:color .3s,transform .45s cubic-bezier(.2,.7,.2,1)}
 .facts .fact b em{font-style:normal;font-variant-numeric:tabular-nums}
 .facts .fact:is(:hover,:focus-visible,.on)::before{transform:scaleY(1)}
+.facts .fact:first-child::before{left:0}
+.facts .fact:first-child:is(:hover,:focus-visible,.on) b,.facts .fact:first-child:is(:hover,:focus-visible,.on) span{transform:translateX(12px)}
+.facts .fact:first-child:is(:hover,:focus-visible,.on) b{transform:translate(12px,-3px)}
 .facts .fact:is(:hover,:focus-visible,.on) b{color:var(--pine);transform:translateY(-3px)}
 .facts .fact:is(:hover,:focus-visible,.on) span{color:var(--ink)}
 .fd{position:absolute;right:14px;top:20px;display:grid;grid-template-columns:repeat(7,7px);gap:5px;pointer-events:none}
@@ -550,6 +562,7 @@ body.is-case .case{display:block}
 </footer>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Image viewer"><button type="button" id="lbClose">Close ✕</button><img alt=""></div>
+<div class="cs-fade" id="csFade" aria-hidden="true"></div><div class="cs-hint" id="csHint" aria-hidden="true"><span class="t">Scroll <i>↓</i></span><span class="c">1/1</span></div>
 <div class="toast" id="toast">Email copied</div>
 
 <script>
@@ -701,6 +714,7 @@ function route(){
   }else{
     const wasCase = document.body.classList.contains("is-case");
     document.body.classList.remove("is-case");
+    if(wasCase && window.heroDots) heroDots.reset();
     document.title = "Greta Mellaro · Service Designer";
     if(wasCase && h){ const t=document.getElementById(h); if(t) requestAnimationFrame(()=>t.scrollIntoView()); }
   }
@@ -733,9 +747,26 @@ $("#copyMail").addEventListener("click",async()=>{
 function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("on");setTimeout(()=>el.classList.remove("on"),1800)}
 </script>
 <script>
-(()=>{const h=document.querySelector('.hero');if(!h)return;let done=false;
-const go=()=>{if(done)return;done=true;h.classList.add('lined');['pointermove','click','scroll','touchstart','keydown'].forEach(e=>removeEventListener(e,go))};
-['pointermove','click','scroll','touchstart','keydown'].forEach(e=>addEventListener(e,go,{passive:true}));})();
+(()=>{const h=document.querySelector('.hero');if(!h)return;
+const dots=[...h.querySelectorAll('.hd')];const EV=['pointermove','click','scroll','touchstart','keydown','wheel'];
+let armed=false;
+const visible=()=>{const r=h.getBoundingClientRect();return r.bottom>80&&r.top<innerHeight*0.6};
+const go=()=>{if(!armed||!visible())return;armed=false;h.classList.add('lined');EV.forEach(e=>removeEventListener(e,go))};
+const arm=()=>{armed=true;EV.forEach(e=>addEventListener(e,go,{passive:true}))};
+const rnd=(a,b)=>a+Math.random()*(b-a);
+function scatter(){const pts=[];let tries=0;
+ while(pts.length<dots.length&&tries<500){tries++;
+  let x=rnd(56,96),y=rnd(8,90);
+  if(x<71&&y>12&&y<86)continue;
+  if(x>74&&y>74)continue;
+  if(pts.some(p=>Math.hypot(p[0]-x,(p[1]-y)*0.6)<9))continue;pts.push([x,y])}
+ const order=dots.map((_,k)=>k).sort(()=>Math.random()-.5);
+ const ease=['cubic-bezier(.65,0,.25,1)','cubic-bezier(.2,.9,.3,1.25)','cubic-bezier(.5,0,.1,1)','cubic-bezier(.34,1.4,.64,1)'][Math.floor(Math.random()*4)];
+ dots.forEach((d,k)=>{const p=pts[k]||[rnd(75,95),rnd(5,90)];d.style.setProperty('--x',p[0].toFixed(1)+'%');d.style.setProperty('--y',p[1].toFixed(1)+'%');
+  d.style.setProperty('--d',(order[k]*rnd(.06,.14)).toFixed(2)+'s');d.style.transitionTimingFunction=ease+','+ease+',ease,ease'});}
+window.heroDots={reset(){h.classList.add('hd-reset');h.classList.remove('lined');scatter();h.offsetWidth;
+ requestAnimationFrame(()=>{h.classList.remove('hd-reset');setTimeout(arm,250)})}};
+arm();})();
 </script><script>
 (()=>{const em=document.querySelector('.hero h1 .rot');if(!em)return;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -767,5 +798,19 @@ document.querySelectorAll('.facts .fact').forEach(f=>{const el=f.querySelector('
  f.addEventListener('focus',run);
  f.addEventListener('click',()=>{const on=!f.classList.contains('on');document.querySelectorAll('.facts .fact.on').forEach(x=>x.classList.remove('on'));if(on){f.classList.add('on');run()}});
 });})();
+</script><script>
+(()=>{const hint=document.getElementById('csHint'),fade=document.getElementById('csFade');let scrolled=false;
+function update(){const m=document.querySelector('body.is-case .cs-media');
+ if(!m){hint.classList.remove('on');fade.classList.remove('on');return}
+ const r=m.getBoundingClientRect(),figs=[...m.querySelectorAll('figure')],n=figs.length,vh=innerHeight;
+ let k=1;figs.forEach((f,ix)=>{if(f.getBoundingClientRect().top<vh*0.55)k=ix+1});
+ const more=r.bottom>vh+8;
+ hint.querySelector('.c').textContent=k+'/'+n;
+ hint.style.left=(r.left+r.width/2)+'px';fade.style.left=r.left+'px';fade.style.width=r.width+'px';
+ hint.classList.toggle('on',more&&n>1);fade.classList.toggle('on',more);
+ hint.classList.toggle('scrolled',scrolled);}
+addEventListener('scroll',()=>{if(scrollY>20)scrolled=true;update()},{passive:true});
+addEventListener('resize',update);addEventListener('hashchange',()=>{scrolled=false;setTimeout(update,60)});
+setTimeout(update,300);setInterval(update,1500);})();
 </script></body>
 </html>
